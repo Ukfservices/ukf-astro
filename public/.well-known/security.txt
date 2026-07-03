@@ -1,0 +1,4 @@
+Contact: mailto:info@ukfservices.com
+Expires: 2027-05-08T08:00:00.000Z
+Preferred-Languages: en
+Canonical: https://ukfservices.com/.well-known/security.txt

@@ -1,0 +1,57 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const props = Astro.props;
+---
+
+<BaseLayout {...props} type="article">
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <Nav />
+  <main class="article-main">
+    <slot />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script is:inline>
+  var bar = document.getElementById('reading-progress');
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    if (bar) {
+      bar.style.width = pct + '%';
+      bar.setAttribute('aria-valuenow', Math.round(pct));
+    }
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+</script>
+
+<style>
+  .reading-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #c9a84c, #e8c96a);
+    z-index: 1000;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(201,168,76,0.6);
+  }
+
+  .article-main {
+    padding-top: 72px;
+    min-height: 60vh;
+  }
+</style>

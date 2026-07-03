@@ -1,0 +1,17 @@
+# Cloudflare Pages _redirects
+# Old article slugs → new D1 slugs (301 permanent redirects)
+# Handles URLs Google may have indexed from the old static sitemap
+
+/articles/gcc-cross-border-shipping-guide     /articles/september-gcc-crossborder                    301
+/articles/uae-export-documents-guide          /articles/july-uae-export-documents                    301
+/articles/how-jebel-ali-port-works            /articles/september-jebel-ali-port                     301
+/articles/dubai-cargo-village-guide           /articles/august-dubai-cargo-village                   301
+/articles/shipping-trends-2025                /articles/shipping-trends-2026                         301
+/insights/uae-us-trade-corridor               /articles/uae-us-trade-corridor                        301
+/articles/logistics-process                   /insights                                              301
+
+# Tool URLs without .html extension → .html versions (static files in public/)
+/tools/fcl-lcl-calculator                     /tools/fcl-lcl-calculator.html                        301
+
+# Indonesia trailing slash normalisation (Cloudflare handles this but explicit is safer)
+/indonesia                                    /indonesia/                                            301

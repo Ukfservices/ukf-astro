@@ -1,0 +1,461 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { env } from 'cloudflare:workers';
+export const prerender = false;
+
+let testimonials: any[] = [];
+let error = null;
+
+try {
+  const db = env.ukf_insights_db as unknown as D1Database;
+  const result = await db.prepare(
+    'SELECT * FROM testimonials WHERE active = 1 ORDER BY sort_order ASC'
+  ).all();
+  testimonials = result.results || [];
+} catch (e: any) {
+  error = e.message;
+}
+
+const sectors = [...new Set(testimonials.map((t: any) => t.sector).filter(Boolean))];
+---
+
+<PageLayout
+  title="Client Testimonials | UKF Services Dubai"
+  description="Real reviews from UAE importers and exporters. See why 200+ clients trust UKF Services for freight forwarding, customs clearance, and logistics in Dubai."
+>
+
+  <!-- HERO -->
+  <section class="testy-hero">
+    <div class="container testy-hero-inner">
+      <p class="eyebrow">Client Stories</p>
+      <h1 class="testy-title">What Our Clients Say.</h1>
+      <p class="testy-subtitle">200+ UAE exporters. 17+ years. Not a single customs penalty. Here's what our clients say about working with UKF Services.</p>
+      <div class="testy-hero-stats">
+        <div class="testy-stat">
+          <strong>{testimonials.length}</strong>
+          <span>Verified reviews</span>
+        </div>
+        <div class="testy-stat-div"></div>
+        <div class="testy-stat">
+          <strong>5.0</strong>
+          <span>Average rating</span>
+        </div>
+        <div class="testy-stat-div"></div>
+        <div class="testy-stat">
+          <strong>10+</strong>
+          <span>Decade-long clients</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER BAR -->
+  {sectors.length > 0 && (
+    <div class="testy-filter-bar">
+      <div class="container">
+        <div class="testy-pills" id="testy-pills">
+          <button class="testy-pill testy-pill--active" data-sector="all">All Sectors</button>
+          {sectors.map((sector: string) => (
+            <button class="testy-pill" data-sector={sector}>{sector}</button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- TESTIMONIALS GRID -->
+  <section class="testy-section">
+    <div class="container">
+      {error && <p style="color:var(--red);padding:40px 0;">Error loading testimonials: {error}</p>}
+
+      <div class="testy-grid" id="testy-grid">
+        {testimonials.map((t: any) => (
+          <div class="testy-card" data-sector={t.sector}>
+            <div class="testy-card-header">
+              <div class="testy-stars">{'★'.repeat(t.rating || 5)}</div>
+              <span class="testy-sector">{t.sector}</span>
+            </div>
+            <blockquote class="testy-quote-full">
+              "{t.quote_full || t.quote_short}"
+            </blockquote>
+            {t.challenge && (
+              <div class="testy-detail">
+                <div class="testy-detail-item">
+                  <span class="testy-detail-label">Challenge</span>
+                  <p>{t.challenge}</p>
+                </div>
+                {t.solution && (
+                  <div class="testy-detail-item">
+                    <span class="testy-detail-label">Solution</span>
+                    <p>{t.solution}</p>
+                  </div>
+                )}
+              </div>
+            )}
+            <div class="testy-author">
+              <div class="testy-avatar">{t.initials}</div>
+              <div class="testy-author-info">
+                <strong>{t.client_name}</strong>
+                <span>{t.role}{t.company_name ? `, ${t.company_name}` : ''}</span>
+                {t.location && <span class="testy-location">📍 {t.location}</span>}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div id="no-testy" style="display:none;" class="no-testy">
+        <p>No testimonials found for this sector.</p>
+        <button onclick="filterTestimonials('all')" class="reset-btn">Show all</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST SECTION -->
+  <section class="testy-trust fade-up">
+    <div class="container testy-trust-inner">
+      <div class="testy-trust-content">
+        <p class="eyebrow">Why Clients Stay</p>
+        <h2>10+ Clients Have Been With Us For Over a Decade.</h2>
+        <p>In freight forwarding, loyalty is earned shipment by shipment. Our longest-standing clients have been with us since 2008 — not because of a contract, but because we have never let them down.</p>
+        <a href="/contact" class="testy-trust-cta">Start Your First Shipment →</a>
+      </div>
+      <div class="testy-trust-stats">
+        <div class="trust-stat-card">
+          <strong>200+</strong>
+          <span>UAE exporters served since 2008</span>
+        </div>
+        <div class="trust-stat-card">
+          <strong>0</strong>
+          <span>UAE customs penalties in 17 years</span>
+        </div>
+        <div class="trust-stat-card">
+          <strong>10+</strong>
+          <span>Clients with us for over a decade</span>
+        </div>
+        <div class="trust-stat-card">
+          <strong>24hr</strong>
+          <span>Maximum quote response time</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="testy-cta-section fade-up">
+    <div class="container testy-cta-inner">
+      <h2>Ready to become our next success story?</h2>
+      <p>Get a tailored freight quote in 24 hours. No obligation.</p>
+      <div class="testy-cta-btns">
+        <a href="/contact" class="testy-cta-primary">Get a Free Quote</a>
+        <a href="https://wa.me/971552572837" target="_blank" rel="noopener" class="testy-cta-wa">WhatsApp Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter JS -->
+  <script is:inline>
+    var allCards = Array.from(document.querySelectorAll('.testy-card'));
+    var pills = document.querySelectorAll('.testy-pill');
+
+    function filterTestimonials(sector) {
+      var visible = 0;
+      allCards.forEach(function(card) {
+        var cardSector = card.getAttribute('data-sector');
+        var show = sector === 'all' || cardSector === sector;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      var noTesty = document.getElementById('no-testy');
+      if (noTesty) noTesty.style.display = visible === 0 ? 'block' : 'none';
+      pills.forEach(function(p) {
+        p.classList.toggle('testy-pill--active', p.getAttribute('data-sector') === sector);
+      });
+    }
+
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        filterTestimonials(pill.getAttribute('data-sector'));
+      });
+    });
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">{JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "UKF Services",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": String(testimonials.length),
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  })}</script>
+
+</PageLayout>
+
+<style>
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* HERO */
+  .testy-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #0f2a50 100%);
+    padding: 100px 0 64px;
+    text-align: center;
+  }
+  .testy-title {
+    font-family: var(--font-heading);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .testy-subtitle {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    max-width: 580px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+  .testy-hero-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    padding-top: 40px;
+  }
+  .testy-stat { text-align: center; padding: 0 40px; }
+  .testy-stat strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .testy-stat span { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .testy-stat-div { width: 1px; height: 48px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+  @media (max-width: 600px) { .testy-stat-div { display: none; } .testy-stat { padding: 12px 20px; } }
+
+  /* FILTER */
+  .testy-filter-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 16px 0;
+    position: sticky;
+    top: 72px;
+    z-index: 80;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .testy-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .testy-pill {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--gray-200);
+    background: none;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .testy-pill:hover { border-color: var(--gold); color: var(--gold); }
+  .testy-pill--active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+  /* GRID */
+  .testy-section { padding: 64px 0 80px; background: var(--gray-100); }
+  .testy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 1024px) { .testy-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .testy-grid { grid-template-columns: 1fr; } }
+
+  .testy-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+  }
+  .testy-card:hover {
+    box-shadow: 0 16px 48px rgba(10,22,40,0.1);
+    transform: translateY(-3px);
+    border-color: var(--gold);
+  }
+  .testy-card-header { display: flex; align-items: center; justify-content: space-between; }
+  .testy-stars { color: var(--gold); font-size: 16px; letter-spacing: 2px; }
+  .testy-sector {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .testy-quote-full {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-style: italic;
+    color: var(--navy);
+    line-height: 1.65;
+    border-left: 3px solid var(--gold);
+    padding-left: 16px;
+    flex: 1;
+  }
+  .testy-detail {
+    background: var(--gray-100);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .testy-detail-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .testy-detail p { font-size: 13px; color: var(--gray-600); line-height: 1.6; margin: 0; }
+  .testy-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--gray-100); padding-top: 16px; }
+  .testy-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .testy-author-info strong { display: block; font-size: 14px; color: var(--navy); margin-bottom: 2px; }
+  .testy-author-info span { display: block; font-size: 12px; color: var(--gray-400); }
+  .testy-location { color: var(--gray-400) !important; font-size: 11px !important; }
+
+  .no-testy { text-align: center; padding: 60px 0; color: var(--gray-400); }
+  .reset-btn {
+    margin-top: 16px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* TRUST */
+  .testy-trust { background: var(--white); padding: 80px 0; border-top: 1px solid var(--gray-200); }
+  .testy-trust-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 900px) { .testy-trust-inner { grid-template-columns: 1fr; } }
+  .testy-trust-content h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(24px, 3vw, 34px);
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.25;
+  }
+  .testy-trust-content p { font-size: 15px; color: var(--gray-600); line-height: 1.75; margin-bottom: 28px; }
+  .testy-trust-cta {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .testy-trust-cta:hover { color: var(--navy); border-color: var(--navy); }
+  .testy-trust-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .trust-stat-card {
+    background: var(--off-white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .trust-stat-card strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 36px;
+    color: var(--navy);
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .trust-stat-card span { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+
+  /* CTA */
+  .testy-cta-section {
+    background: linear-gradient(135deg, var(--navy) 0%, #0f2a50 100%);
+    padding: 72px 0;
+    text-align: center;
+  }
+  .testy-cta-inner h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(24px, 4vw, 38px);
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .testy-cta-inner p { font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+  .testy-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .testy-cta-primary {
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .testy-cta-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .testy-cta-wa {
+    background: #25D366;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 8px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .testy-cta-wa:hover { opacity: 0.9; transform: translateY(-2px); }
+</style>

@@ -1,0 +1,966 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { env } from 'cloudflare:workers';
+export const prerender = false;
+
+let articles: any[] = [];
+let categories: string[] = [];
+let error = null;
+
+try {
+  const db = env.ukf_insights_db as unknown as D1Database;
+
+  const result = await db.prepare(
+    'SELECT id, title, slug, excerpt, category, image_url, read_time, published_date, featured, trending, views FROM articles ORDER BY published_date DESC'
+  ).all();
+
+  articles = result.results || [];
+
+  // Extract unique categories
+  const catSet = new Set(articles.map((a: any) => a.category).filter(Boolean));
+  categories = Array.from(catSet) as string[];
+
+} catch (e: any) {
+  error = e.message;
+}
+
+function formatDate(dateStr: string) {
+  if (!dateStr) return '';
+  try {
+    return new Date(dateStr).toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'short', year: 'numeric'
+    });
+  } catch { return dateStr; }
+}
+
+function getCategoryColor(cat: string) {
+  const map: Record<string, string> = {
+    'Air Freight': '#3b82f6',
+    'Sea Freight': '#0ea5e9',
+    'Customs': '#8b5cf6',
+    'Trade Corridors': '#10b981',
+    'Market Intelligence': '#f59e0b',
+    'Cargo Journeys': '#e63946',
+    'Indonesia': '#10b981',
+  };
+  return map[cat] || '#c9a84c';
+}
+
+const featured = articles.filter((a: any) => a.featured).slice(0, 3);
+const heroArticles = featured.length >= 3 ? featured : articles.slice(0, 3);
+const trending = articles.filter((a: any) => a.trending).slice(0, 5);
+const trendingFallback = trending.length > 0 ? trending : articles.slice(0, 5);
+---
+
+<PageLayout
+  title="Freight Intelligence | UKF Services"
+  description="Expert analysis, trade corridor guides, customs insights and logistics intelligence from UKF Services — Dubai's specialist freight forwarder since 2008."
+>
+
+  <!-- INTEL TICKER -->
+  <div class="ticker-bar">
+    <div class="ticker-label">LIVE INTEL</div>
+    <div class="ticker-track">
+      <div class="ticker-content">
+        <span>🛫 UAE–UK air freight transit: 7–9 hrs</span>
+        <span>🚢 Jebel Ali–Felixstowe sea: 18–22 days</span>
+        <span>📦 Dubai Cargo Village: Operational 24/7</span>
+        <span>⚠️ Hormuz Strait: Monitor for updates</span>
+        <span>🌏 UAE–Indonesia sea freight: 12–16 days</span>
+        <span>✈️ Emirates SkyCargo: Priority slots available</span>
+        <span>🛫 UAE–UK air freight transit: 7–9 hrs</span>
+        <span>🚢 Jebel Ali–Felixstowe sea: 18–22 days</span>
+        <span>📦 Dubai Cargo Village: Operational 24/7</span>
+        <span>⚠️ Hormuz Strait: Monitor for updates</span>
+        <span>🌏 UAE–Indonesia sea freight: 12–16 days</span>
+        <span>✈️ Emirates SkyCargo: Priority slots available</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <section class="insights-header">
+    <div class="container">
+      <div class="insights-header-inner">
+        <div>
+          <p class="insights-eyebrow">UKF Intelligence</p>
+          <h1 class="insights-title">Freight Intelligence</h1>
+          <p class="insights-subtitle">Trade corridor analysis, customs guides, and logistics intelligence from Dubai's specialist freight team.</p>
+        </div>
+        <div class="insights-stats">
+          <div class="stat-item">
+            <span class="stat-number">{articles.length}</span>
+            <span class="stat-label">Articles</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">{categories.length}</span>
+            <span class="stat-label">Topics</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">17+</span>
+            <span class="stat-label">Years expertise</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH + FILTER BAR -->
+  <div class="filter-bar-wrap">
+    <div class="container filter-bar">
+      <div class="search-wrap">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+        </svg>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search articles..."
+          class="search-input"
+          aria-label="Search articles"
+        />
+        <span id="result-count" class="result-count">{articles.length} articles</span>
+      </div>
+      <div class="category-pills" id="category-pills">
+        <button class="pill pill--active" data-category="all">All</button>
+        {categories.map((cat: string) => (
+          <button
+            class="pill"
+            data-category={cat}
+            style={`--pill-color: ${getCategoryColor(cat)}`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="insights-body">
+    <div class="container insights-layout">
+
+      <!-- LEFT: ARTICLES -->
+      <div class="articles-col">
+
+        <!-- HERO CAROUSEL -->
+        <div class="carousel-section fade-up" id="carousel-section">
+          <div class="carousel" id="carousel">
+            {heroArticles.map((article: any, i: number) => (
+              <a
+                href={`/articles/${article.slug}`}
+                class={`carousel-slide ${i === 0 ? 'active' : ''}`}
+                data-index={i}
+                style={`background-image: url('${article.image_url || '/images/cargo-hero.jpg'}')`}
+              >
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                  <span class="carousel-pill" style={`background:${getCategoryColor(article.category)}`}>
+                    {article.category}
+                  </span>
+                  <h2 class="carousel-title">{article.title}</h2>
+                  <p class="carousel-excerpt">{article.excerpt?.substring(0, 120)}...</p>
+                  <div class="carousel-meta">
+                    <span>{article.read_time}</span>
+                    <span>{formatDate(article.published_date)}</span>
+                    <span class="carousel-read">Read article →</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+          <!-- Carousel dots -->
+          <div class="carousel-dots" id="carousel-dots">
+            {heroArticles.map((_: any, i: number) => (
+              <button class={`dot ${i === 0 ? 'active' : ''}`} data-dot={i} aria-label={`Slide ${i + 1}`}></button>
+            ))}
+          </div>
+        </div>
+
+        <!-- ALL ARTICLES GRID -->
+        <div class="articles-grid-section">
+          <div class="section-header">
+            <h2 class="section-title">All Intelligence</h2>
+          </div>
+          <div class="articles-grid" id="articles-grid">
+            {articles.map((article: any) => (
+              <a
+                href={`/articles/${article.slug}`}
+                class="article-card"
+                data-category={article.category}
+                data-title={article.title.toLowerCase()}
+                data-excerpt={(article.excerpt || '').toLowerCase()}
+              >
+                <div class="card-image" style={`background-image: url('${article.image_url || '/images/cargo-hero.jpg'}')`}>
+                  <span class="card-pill" style={`background:${getCategoryColor(article.category)}`}>
+                    {article.category}
+                  </span>
+                  {article.trending && <span class="card-trending">Trending</span>}
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">{article.title}</h3>
+                  <p class="card-excerpt">{article.excerpt?.substring(0, 110)}...</p>
+                  <div class="card-meta">
+                    <span class="card-read-time">{article.read_time}</span>
+                    <span class="card-date">{formatDate(article.published_date)}</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <!-- No results message -->
+          <div id="no-results" class="no-results" style="display:none;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <p>No articles found for your search.</p>
+            <button onclick="document.getElementById('search-input').value=''; filterArticles();" class="reset-btn">Clear search</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: SIDEBAR -->
+      <aside class="insights-sidebar">
+
+        <!-- CTA Card -->
+        <div class="sidebar-cta fade-up">
+          <div class="sidebar-cta-icon">✈</div>
+          <h3>Need a freight quote?</h3>
+          <p>Speak to a specialist today. Same-day response, no obligation.</p>
+          <a href="/contact" class="sidebar-cta-btn">Get a Free Quote</a>
+          <a href="https://wa.me/971552572837" target="_blank" rel="noopener" class="sidebar-wa-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Us
+          </a>
+        </div>
+
+        <!-- Trending Articles -->
+        <div class="sidebar-trending fade-up">
+          <h3 class="sidebar-section-title">Trending Now</h3>
+          <div class="trending-list">
+            {trendingFallback.map((article: any, i: number) => (
+              <a href={`/articles/${article.slug}`} class="trending-item">
+                <span class="trending-num">{String(i + 1).padStart(2, '0')}</span>
+                <div class="trending-content">
+                  <span class="trending-cat" style={`color:${getCategoryColor(article.category)}`}>{article.category}</span>
+                  <p class="trending-title">{article.title}</p>
+                  <span class="trending-read">{article.read_time}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Topic Tags -->
+        <div class="sidebar-tags fade-up">
+          <h3 class="sidebar-section-title">Topics</h3>
+          <div class="tags-cloud">
+            {categories.map((cat: string) => (
+              <button
+                class="tag-btn"
+                data-filter={cat}
+                style={`--tag-color: ${getCategoryColor(cat)}`}
+                onclick={`filterByCategory('${cat}')`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="sidebar-tools fade-up">
+          <h3 class="sidebar-section-title">Freight Tools</h3>
+          <div class="tools-list">
+            <a href="/tools/fcl-lcl-calculator" class="tool-item">
+              <span class="tool-icon">📦</span>
+              <div>
+                <p class="tool-name">FCL vs LCL Calculator</p>
+                <p class="tool-desc">Find the right container option</p>
+              </div>
+            </a>
+            <a href="/tools/incoterms-guide" class="tool-item">
+              <span class="tool-icon">📋</span>
+              <div>
+                <p class="tool-name">Incoterms Guide</p>
+                <p class="tool-desc">Understand trade terms instantly</p>
+              </div>
+            </a>
+            <a href="/contact" class="tool-item">
+              <span class="tool-icon">💬</span>
+              <div>
+                <p class="tool-name">Get a Quote</p>
+                <p class="tool-desc">Same-day freight estimate</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- JS: Search, Filter, Carousel -->
+  <script is:inline>
+    var allArticles = Array.from(document.querySelectorAll('.article-card'));
+    var activeCategory = 'all';
+    var searchTerm = '';
+
+    function filterArticles() {
+      var search = document.getElementById('search-input').value.toLowerCase().trim();
+      searchTerm = search;
+      var visible = 0;
+
+      allArticles.forEach(function(card) {
+        var cat = card.getAttribute('data-category');
+        var title = card.getAttribute('data-title') || '';
+        var excerpt = card.getAttribute('data-excerpt') || '';
+        var matchesCat = activeCategory === 'all' || cat === activeCategory;
+        var matchesSearch = !search || title.includes(search) || excerpt.includes(search) || (cat && cat.toLowerCase().includes(search));
+
+        if (matchesCat && matchesSearch) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Update count
+      var countEl = document.getElementById('result-count');
+      if (countEl) countEl.textContent = visible + ' article' + (visible !== 1 ? 's' : '');
+
+      // No results
+      var noResults = document.getElementById('no-results');
+      if (noResults) noResults.style.display = visible === 0 ? 'flex' : 'none';
+
+      // Hide/show carousel when filtering
+      var carousel = document.getElementById('carousel-section');
+      if (carousel) carousel.style.display = (activeCategory === 'all' && !search) ? '' : 'none';
+    }
+
+    // Search input
+    var searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', filterArticles);
+    }
+
+    // Category pills
+    var pills = document.querySelectorAll('.pill');
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        pills.forEach(function(p) { p.classList.remove('pill--active'); });
+        pill.classList.add('pill--active');
+        activeCategory = pill.getAttribute('data-category');
+        filterArticles();
+        // Scroll to grid
+        var grid = document.getElementById('articles-grid');
+        if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Tag cloud buttons
+    function filterByCategory(cat) {
+      activeCategory = cat;
+      pills.forEach(function(p) {
+        p.classList.toggle('pill--active', p.getAttribute('data-category') === cat);
+      });
+      filterArticles();
+      var grid = document.getElementById('articles-grid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Carousel
+    var slides = document.querySelectorAll('.carousel-slide');
+    var dots = document.querySelectorAll('.dot');
+    var currentSlide = 0;
+    var carouselTimer;
+
+    function goToSlide(n) {
+      slides.forEach(function(s) { s.classList.remove('active'); });
+      dots.forEach(function(d) { d.classList.remove('active'); });
+      currentSlide = (n + slides.length) % slides.length;
+      if (slides[currentSlide]) slides[currentSlide].classList.add('active');
+      if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    }
+
+    function startCarousel() {
+      carouselTimer = setInterval(function() {
+        goToSlide(currentSlide + 1);
+      }, 5000);
+    }
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        clearInterval(carouselTimer);
+        goToSlide(parseInt(dot.getAttribute('data-dot')));
+        startCarousel();
+      });
+    });
+
+    if (slides.length > 1) startCarousel();
+  </script>
+
+</PageLayout>
+
+<style>
+  /* TICKER */
+  .ticker-bar {
+    background: var(--navy);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 36px;
+  }
+  .ticker-label {
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 0 16px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .ticker-track {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker-content {
+    display: flex;
+    gap: 60px;
+    animation: ticker 35s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-content span {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    flex-shrink: 0;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* PAGE HEADER */
+  .insights-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    padding: 56px 0 48px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .insights-header-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .insights-eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .insights-title {
+    font-family: var(--font-heading);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .insights-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .insights-stats {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+  .stat-item { text-align: center; }
+  .stat-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    display: block;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* FILTER BAR */
+  .filter-bar-wrap {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 72px;
+    z-index: 80;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 8px 14px;
+    flex-shrink: 0;
+    min-width: 240px;
+  }
+  .search-icon { color: var(--gray-400); flex-shrink: 0; }
+  .search-input {
+    border: none;
+    background: none;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    width: 160px;
+  }
+  .search-input::placeholder { color: var(--gray-400); }
+  .result-count {
+    font-size: 12px;
+    color: var(--gray-400);
+    white-space: nowrap;
+    border-left: 1px solid var(--gray-200);
+    padding-left: 10px;
+  }
+  .category-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+  .pill {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--gray-200);
+    background: none;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .pill:hover { border-color: var(--gold); color: var(--gold); }
+  .pill--active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+
+  /* LAYOUT */
+  .insights-body { padding: 48px 0 80px; background: var(--gray-100); }
+  .insights-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 1024px) {
+    .insights-layout { grid-template-columns: 1fr; }
+    .insights-sidebar { display: none; }
+  }
+
+  /* CAROUSEL */
+  .carousel-section { margin-bottom: 48px; }
+  .carousel {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 420px;
+    background: var(--navy);
+  }
+  .carousel-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    display: flex;
+    align-items: flex-end;
+    text-decoration: none;
+  }
+  .carousel-slide.active { opacity: 1; z-index: 2; }
+  .carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10,22,40,0.1) 0%, rgba(10,22,40,0.85) 100%);
+  }
+  .carousel-content {
+    position: relative;
+    z-index: 3;
+    padding: 36px;
+    width: 100%;
+  }
+  .carousel-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .carousel-title {
+    font-family: var(--font-heading);
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    max-width: 640px;
+  }
+  .carousel-excerpt {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    max-width: 580px;
+    margin-bottom: 16px;
+  }
+  .carousel-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+  }
+  .carousel-read {
+    color: var(--gold);
+    font-weight: 600;
+    margin-left: auto;
+  }
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    padding: 0;
+  }
+  .dot.active { background: var(--gold); transform: scale(1.3); }
+
+  /* ARTICLES GRID */
+  .articles-grid-section { }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    color: var(--navy);
+  }
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 700px) { .articles-grid { grid-template-columns: 1fr; } }
+
+  .article-card {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(10,22,40,0.1);
+    border-color: var(--gold);
+  }
+  .card-image {
+    height: 190px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  /* Hide any data attribute rendering */
+  .article-card::before { display: none !important; content: none !important; }
+  .carousel-slide::before { display: none !important; content: none !important; }
+  .card-pill {
+    position: absolute;
+    top: 12px; left: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .card-trending {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: var(--red);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .card-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .card-excerpt {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 16px;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--gray-400);
+    border-top: 1px solid var(--gray-100);
+    padding-top: 12px;
+  }
+
+  /* NO RESULTS */
+  .no-results {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    color: var(--gray-400);
+    gap: 16px;
+    text-align: center;
+  }
+  .no-results p { font-size: 16px; }
+  .reset-btn {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .reset-btn:hover { opacity: 0.85; }
+
+  /* SIDEBAR */
+  .insights-sidebar {
+    position: sticky;
+    top: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sidebar-cta {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+  }
+  .sidebar-cta-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .sidebar-cta h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .sidebar-cta p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .sidebar-cta-btn {
+    display: block;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 11px 20px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background 0.2s;
+  }
+  .sidebar-cta-btn:hover { background: var(--gold-light); }
+  .sidebar-wa-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #25D366;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 11px 20px;
+    border-radius: 6px;
+    transition: opacity 0.2s;
+  }
+  .sidebar-wa-btn:hover { opacity: 0.9; }
+
+  .sidebar-trending, .sidebar-tags, .sidebar-tools {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .sidebar-section-title {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .trending-list { display: flex; flex-direction: column; gap: 16px; }
+  .trending-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .trending-item:hover { opacity: 0.75; }
+  .trending-num {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gray-200);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 28px;
+  }
+  .trending-cat {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .trending-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .trending-read { font-size: 11px; color: var(--gray-400); }
+
+  .tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag-btn {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--gray-200);
+    background: none;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tag-btn:hover {
+    border-color: var(--tag-color, var(--gold));
+    color: var(--tag-color, var(--gold));
+  }
+
+  .tools-list { display: flex; flex-direction: column; gap: 4px; }
+  .tool-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .tool-item:hover { background: var(--gray-100); }
+  .tool-icon { font-size: 22px; flex-shrink: 0; }
+  .tool-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .tool-desc { font-size: 11px; color: var(--gray-400); }
+</style>
+

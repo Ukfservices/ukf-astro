@@ -1,0 +1,12 @@
+{
+  "name": "ukfservices",
+  "compatibility_date": "2024-04-03",
+  "pages_build_output_dir": "./dist/client",
+  "d1_databases": [
+    {
+      "binding": "ukf_insights_db",
+      "database_name": "ukf-insights-db",
+      "database_id": "d1fc8cf9-c7be-43a6-abbe-0f6312b47039"
+    }
+  ]
+}

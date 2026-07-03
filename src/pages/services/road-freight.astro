@@ -1,0 +1,180 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+export const prerender = false;
+---
+
+<PageLayout
+  title="Road Freight UAE | FTL & LTL Domestic Transport | UKF Services"
+  description="Flexible road freight within the UAE and across the GCC. FTL and LTL options, GPS-tracked vehicles, experienced drivers, door-to-door delivery."
+>
+
+  <!-- HERO -->
+  <section class="svc-hero">
+    <div class="container svc-hero-inner">
+      <div class="svc-hero-icon">🚛</div>
+      <p class="eyebrow">Road Freight</p>
+      <h1 class="svc-title">Flexible Road Freight Across the UAE & GCC.</h1>
+      <p class="svc-subtitle">Full Truck Load and Less than Truck Load options with GPS-tracked vehicles, experienced drivers, and direct door-to-door delivery.</p>
+      <div class="svc-hero-ctas">
+        <a href="/contact" class="svc-cta-primary">Get a Quote</a>
+        <a href="https://wa.me/971552572837" target="_blank" rel="noopener" class="svc-cta-wa">WhatsApp Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="svc-stats-bar">
+    <div class="container svc-stats-grid">
+      <div class="svc-stat"><strong>200+</strong><span>Global destinations</span></div>
+      <div class="svc-stat-div"></div>
+      <div class="svc-stat"><strong>24–48hrs</strong><span>Typical UK/Europe transit</span></div>
+      <div class="svc-stat-div"></div>
+      <div class="svc-stat"><strong>Same day</strong><span>Booking confirmation</span></div>
+      <div class="svc-stat-div"></div>
+      <div class="svc-stat"><strong>100%</strong><span>Customs compliance</span></div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="svc-details-section">
+    <div class="container svc-details-grid">
+      <div class="svc-main fade-up">
+        <h2>Reliable Domestic & GCC Road Transport</h2>
+        <p>Road freight is often the final and most visible leg of any shipment — and the one most prone to delay or damage if poorly managed. Our fleet partners are GPS-tracked, our drivers are experienced, and our routing is optimised to reduce handling and transit time.</p>
+        <p>Whether you need a full truck dedicated to your cargo or want to share space and cost, we have the right option — with the same reliability and communication standard across every shipment.</p>
+
+        <h3>Service Options</h3>
+        <div class="svc-options-grid">
+          <div class="svc-option-card">
+            <h4>Full Truck Load (FTL)</h4>
+            <p>Dedicated vehicle for your cargo — fastest transit, no shared handling.</p>
+          </div>
+          <div class="svc-option-card">
+            <h4>Less than Truck Load (LTL)</h4>
+            <p>Cost-effective shared transport for smaller shipments.</p>
+          </div>
+          <div class="svc-option-card">
+            <h4>Door-to-Door Delivery</h4>
+            <p>Direct collection and delivery — reducing handling and damage risk.</p>
+          </div>
+          <div class="svc-option-card">
+            <h4>Specialised Vehicles</h4>
+            <p>Refrigerated, flatbed and heavy haulage options available.</p>
+          </div>
+        </div>
+
+        <h3>What's Included</h3>
+        <ul class="svc-checklist">
+          <li>GPS-tracked vehicles with real-time location visibility</li>
+          <li>Experienced, vetted drivers across all routes</li>
+          <li>Direct door-to-door delivery — minimal handling</li>
+          <li>Proof of delivery documentation on every run</li>
+          <li>Flexible scheduling for urgent or planned shipments</li>
+          <li>Fully itemised quote — no hidden fees</li>
+        </ul>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="svc-sidebar">
+        <div class="svc-sidebar-card fade-up">
+          <h3>Get a Quote</h3>
+          <p>Same-day response. Fully itemised. No obligation.</p>
+          <a href="/contact" class="svc-sidebar-btn">Request Road Freight Quote</a>
+          <a href="https://wa.me/971552572837" target="_blank" rel="noopener" class="svc-sidebar-wa">WhatsApp Us</a>
+        </div>
+        <div class="svc-sidebar-card svc-sidebar-card--list fade-up">
+          <h3>Other Services</h3>
+          <a href="/services/air-freight">Air Freight →</a>
+          <a href="/services/ocean-freight">Ocean Freight →</a>
+          <a href="/services/customs-clearance">Customs Clearance →</a>
+          <a href="/services/cross-border">Cross-Border Road →</a>
+          <a href="/services/incoterms">Incoterms Advisory →</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="svc-cta-section fade-up">
+    <div class="container svc-cta-inner">
+      <div>
+        <h2>Need UAE or GCC road transport?</h2>
+        <p>Tell us your route — same-day quote guaranteed.</p>
+      </div>
+      <div class="svc-cta-btns">
+        <a href="/contact" class="svc-cta-primary">Get a Free Quote</a>
+        <a href="https://wa.me/971552572837" target="_blank" rel="noopener" class="svc-cta-wa">WhatsApp Us</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">{JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Road Freight",
+    "description": "Domestic UAE and GCC road freight solutions",
+    "provider": { "@type": "Organization", "name": "UKF Services" },
+    "areaServed": "Worldwide",
+    "url": "https://ukfservices.com/services/road-freight"
+  })}</script>
+
+</PageLayout>
+
+<style>
+  .eyebrow { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; }
+
+  .svc-hero { background: linear-gradient(135deg, var(--navy) 0%, #0f2a50 100%); padding: 100px 0 64px; text-align: center; }
+  .svc-hero-icon { font-size: 48px; margin-bottom: 16px; }
+  .svc-title { font-family: var(--font-heading); font-size: clamp(28px, 4.5vw, 50px); font-weight: 800; color: var(--white); margin-bottom: 18px; line-height: 1.15; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .svc-subtitle { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto 32px; line-height: 1.7; }
+  .svc-hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .svc-cta-primary { background: var(--gold); color: var(--navy); font-family: var(--font-body); font-size: 14px; font-weight: 700; padding: 13px 28px; border-radius: 6px; transition: background 0.2s, transform 0.2s; }
+  .svc-cta-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .svc-cta-wa { background: #25D366; color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 600; padding: 13px 28px; border-radius: 6px; transition: opacity 0.2s, transform 0.2s; }
+  .svc-cta-wa:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .svc-stats-bar { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 32px 0; }
+  .svc-stats-grid { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .svc-stat { text-align: center; padding: 8px 32px; }
+  .svc-stat strong { display: block; font-family: var(--font-heading); font-size: 28px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+  .svc-stat span { font-size: 12px; color: var(--gray-600); }
+  .svc-stat-div { width: 1px; height: 36px; background: var(--gray-200); }
+  @media (max-width: 700px) { .svc-stat-div { display: none; } }
+
+  .svc-details-section { padding: 64px 0 80px; background: var(--gray-100); }
+  .svc-details-grid { display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
+  @media (max-width: 900px) { .svc-details-grid { grid-template-columns: 1fr; } }
+
+  .svc-main { background: var(--white); border-radius: 16px; padding: 44px; border: 1px solid var(--gray-200); }
+  .svc-main h2 { font-family: var(--font-heading); font-size: 28px; color: var(--navy); margin-bottom: 16px; }
+  .svc-main h3 { font-family: var(--font-heading); font-size: 20px; color: var(--navy); margin: 32px 0 16px; }
+  .svc-main p { font-size: 15px; color: var(--gray-600); line-height: 1.75; margin-bottom: 16px; }
+
+  .svc-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px; }
+  @media (max-width: 560px) { .svc-options-grid { grid-template-columns: 1fr; } }
+  .svc-option-card { background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px; }
+  .svc-option-card h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .svc-option-card p { font-size: 13px; color: var(--gray-600); line-height: 1.6; margin: 0; }
+
+  .svc-checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .svc-checklist li { font-size: 14px; color: var(--gray-600); padding-left: 26px; position: relative; line-height: 1.6; }
+  .svc-checklist li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+
+  .svc-sidebar { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 100px; }
+  .svc-sidebar-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 28px; }
+  .svc-sidebar-card h3 { font-family: var(--font-heading); font-size: 18px; color: var(--navy); margin-bottom: 8px; }
+  .svc-sidebar-card p { font-size: 13px; color: var(--gray-600); margin-bottom: 20px; }
+  .svc-sidebar-btn { display: block; background: var(--navy); color: var(--white); text-align: center; font-size: 13px; font-weight: 700; padding: 12px; border-radius: 6px; margin-bottom: 10px; transition: background 0.2s; }
+  .svc-sidebar-btn:hover { background: var(--gold); color: var(--navy); }
+  .svc-sidebar-wa { display: block; background: #25D366; color: #fff; text-align: center; font-size: 13px; font-weight: 600; padding: 12px; border-radius: 6px; transition: opacity 0.2s; }
+  .svc-sidebar-wa:hover { opacity: 0.9; }
+  .svc-sidebar-card--list a { display: block; font-size: 13px; color: var(--gray-600); padding: 8px 0; border-bottom: 1px solid var(--gray-100); transition: color 0.2s; }
+  .svc-sidebar-card--list a:last-child { border-bottom: none; }
+  .svc-sidebar-card--list a:hover { color: var(--gold); }
+
+  .svc-cta-section { background: linear-gradient(135deg, var(--navy) 0%, #0f2a50 100%); padding: 64px 0; border-top: 1px solid rgba(201,168,76,0.2); }
+  .svc-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .svc-cta-inner h2 { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 30px); color: var(--white); margin-bottom: 6px; }
+  .svc-cta-inner p { font-size: 14px; color: rgba(255,255,255,0.6); }
+  .svc-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+</style>

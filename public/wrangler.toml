@@ -1,0 +1,7 @@
+name = "ukf-services-site"
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "ukf_insights_db"
+database_name = "ukf-insights-db"
+database_id = "d1fc8cf9-c7be-43a6-abbe-0f6312b47039"

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCL vs LCL Cost Calculator Dubai | UKF Services</title>
+<meta name="description" content="Free FCL vs LCL shipping calculator for UAE exporters. Compare Full Container Load vs Less than Container Load costs across 5 Jebel Ali trade lanes. Updated rates 2026.">
+<meta name="keywords" content="FCL LCL calculator Dubai, shipping cost calculator UAE, Jebel Ali freight calculator, container shipping cost 2026">
+<link rel="canonical" href="https://ukfservices.com/tools/fcl-lcl-calculator">
+<meta property="og:title" content="FCL vs LCL Shipping Calculator | UKF Services Dubai">
+<meta property="og:description" content="Instant cost comparison across 5 Jebel Ali trade lanes. Free tool for UAE exporters and importers.">
+<meta property="og:url" content="https://ukfservices.com/tools/fcl-lcl-calculator">
+<meta property="og:type" content="website">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FCL vs LCL Shipping Calculator","url":"https://ukfservices.com/tools/fcl-lcl-calculator","description":"Compare Full Container Load vs Less than Container Load shipping costs from Jebel Ali","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"UKF Services","url":"https://ukfservices.com"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ukfservices.com/"},{"@type":"ListItem","position":2,"name":"Freight Tools","item":"https://ukfservices.com/tools/"},{"@type":"ListItem","position":3,"name":"FCL vs LCL Calculator","item":"https://ukfservices.com/tools/fcl-lcl-calculator"}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ── TOKENS ── */
+:root{
+  --navy:#0a1628;
+  --navy-mid:#122040;
+  --gold:#c9a84c;
+  --gold-pale:#f5edd6;
+  --gold-dim:rgba(201,168,76,.18);
+  --white:#ffffff;
+  --surface:#f6f7f9;
+  --border:#e4e6ea;
+  --text:#1a1f2e;
+  --muted:#6b7280;
+  --danger:#D85A30;
+  --danger-pale:#FAECE7;
+  --success:#0e7c57;
+  --success-pale:#e3f5ef;
+  --info:#1560a8;
+  --info-pale:#e6f1fb;
+  --font:'Inter',sans-serif;
+  --serif:'Playfair Display',serif;
+}
+
+/* ── RESET & BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--surface);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;}
+a{color:var(--gold);text-decoration:none;}
+a:hover{text-decoration:underline;}
+input,select,button{font-family:var(--font);}
+
+/* ── NAV ── */
+.top-bar{background:var(--navy);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.top-bar .logo{font-family:var(--serif);font-size:1.5rem;color:#fff;letter-spacing:.02em;}
+.top-bar .logo span{color:var(--gold);}
+.top-bar .back-link{font-size:13px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px;transition:color .15s;}
+.top-bar .back-link:hover{color:#fff;text-decoration:none;}
+.top-bar .back-link i{font-size:11px;}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{background:var(--navy-mid);padding:10px 5%;display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.4);}
+.breadcrumb a{color:rgba(255,255,255,.55);}
+.breadcrumb span{color:var(--gold);}
+.breadcrumb i{font-size:9px;}
+
+/* ── PAGE HERO ── */
+.page-hero{background:var(--navy);padding:40px 5% 36px;border-bottom:1px solid rgba(201,168,76,.15);}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.page-hero h1{font-family:var(--serif);font-size:2.2rem;color:#fff;line-height:1.25;margin-bottom:10px;}
+.page-hero p{font-size:1rem;color:rgba(255,255,255,.55);max-width:600px;}
+.hero-meta{display:flex;gap:20px;margin-top:18px;flex-wrap:wrap;}
+.hero-badge{font-size:11px;font-weight:600;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px;}
+.hero-badge i{color:var(--gold);font-size:11px;}
+.hero-badge strong{color:rgba(255,255,255,.8);}
+
+/* ── MAIN LAYOUT ── */
+.calc-layout{display:grid;grid-template-columns:1fr 340px;gap:28px;max-width:1160px;margin:0 auto;padding:28px 5% 80px;}
+
+/* ── PANEL ── */
+.panel{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:26px 28px;margin-bottom:0;}
+.panel-title{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.panel-title i{color:var(--gold);font-size:13px;}
+
+/* ── SECTION LABEL ── */
+.field-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;display:block;}
+.field-hint{font-size:12px;color:var(--muted);margin-top:4px;}
+.field-group{margin-bottom:20px;}
+
+/* ── INPUTS ── */
+select,input[type=text],input[type=email],input[type=number]{
+  width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;
+  font-size:14px;color:var(--text);background:var(--white);outline:none;transition:border-color .15s;
+}
+select:focus,input:focus{border-color:var(--gold);}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.input-with-unit{position:relative;}
+.input-with-unit input{padding-right:52px;}
+.unit-label{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:600;color:var(--muted);pointer-events:none;}
+
+/* ── UNIT TOGGLE ── */
+.unit-toggle{display:flex;align-items:center;gap:8px;margin-bottom:20px;}
+.unit-toggle-label{font-size:13px;color:var(--muted);}
+.toggle-btn-group{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.toggle-btn{padding:7px 16px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--muted);transition:all .15s;letter-spacing:.03em;}
+.toggle-btn.active{background:var(--navy);color:#fff;}
+
+/* ── ROUTE SELECTOR ── */
+.route-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.route-card{border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s;position:relative;}
+.route-card:hover{border-color:var(--gold);background:var(--gold-pale);}
+.route-card.selected{border-color:var(--gold);background:var(--gold-pale);}
+.route-card.selected .route-check{opacity:1;}
+.route-name{font-size:13px;font-weight:700;color:var(--text);}
+.route-detail{font-size:11px;color:var(--muted);margin-top:2px;}
+.route-check{position:absolute;top:10px;right:10px;width:18px;height:18px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;}
+.route-check i{font-size:9px;color:var(--navy);}
+
+/* ── CARGO TYPE ── */
+.cargo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.cargo-chip{border:1.5px solid var(--border);border-radius:8px;padding:9px 10px;cursor:pointer;transition:all .15s;text-align:center;}
+.cargo-chip:hover{border-color:var(--gold);}
+.cargo-chip.selected{border-color:var(--gold);background:var(--gold-pale);}
+.cargo-chip i{display:block;font-size:16px;color:var(--gold);margin-bottom:4px;}
+.cargo-chip span{font-size:11px;font-weight:600;color:var(--text);}
+.cargo-warning{background:var(--danger-pale);border:1px solid #f5c4b3;border-radius:8px;padding:12px 14px;margin-top:12px;font-size:13px;color:#993C1D;display:none;align-items:flex-start;gap:10px;line-height:1.5;}
+.cargo-warning i{font-size:14px;flex-shrink:0;margin-top:1px;}
+
+/* ── TOGGLES / CHECKBOXES ── */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-label{font-size:13px;color:var(--text);}
+.toggle-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.ios-toggle{position:relative;width:38px;height:22px;flex-shrink:0;}
+.ios-toggle input{opacity:0;width:0;height:0;position:absolute;}
+.ios-track{position:absolute;inset:0;background:var(--border);border-radius:11px;cursor:pointer;transition:background .2s;}
+.ios-track::before{content:'';position:absolute;width:18px;height:18px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:transform .2s;}
+.ios-toggle input:checked+.ios-track{background:var(--gold);}
+.ios-toggle input:checked+.ios-track::before{transform:translateX(16px);}
+
+/* ── CALCULATE BUTTON ── */
+.calc-btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.02em;transition:opacity .15s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.calc-btn:hover{opacity:.9;}
+.calc-btn i{font-size:14px;color:var(--gold);}
+
+/* ── RESULTS PANEL ── */
+#results-panel{display:none;}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.results-route{font-size:13px;font-weight:600;color:var(--muted);}
+.results-route strong{color:var(--text);}
+.results-toggle-btn{font-size:12px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;}
+.results-toggle-btn:hover{border-color:var(--gold);}
+
+/* ── COMPARISON BARS ── */
+.compare-bars{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.compare-bar-wrap{border:1.5px solid var(--border);border-radius:12px;padding:18px 16px;position:relative;overflow:hidden;}
+.compare-bar-wrap.winner{border-color:var(--gold);background:linear-gradient(135deg,rgba(201,168,76,.06) 0%,rgba(201,168,76,.02) 100%);}
+.compare-bar-wrap.loser{opacity:.8;}
+.winner-tag{position:absolute;top:0;right:0;background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;letter-spacing:.07em;padding:4px 10px;border-radius:0 10px 0 8px;}
+.bar-mode{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.bar-price{font-size:1.8rem;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px;}
+.bar-price.blurred{filter:blur(6px);user-select:none;cursor:default;}
+.bar-price span{font-size:13px;font-weight:400;color:var(--muted);}
+.bar-breakdown{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.55;}
+.bar-detail-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);padding:4px 0;border-top:1px solid var(--border);}
+.bar-detail-row strong{color:var(--text);}
+
+/* ── RECOMMENDATION ── */
+.recommendation-block{background:var(--navy);border-radius:12px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:flex-start;gap:14px;}
+.rec-icon{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rec-icon i{color:var(--navy);font-size:16px;}
+.rec-text{}
+.rec-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px;}
+.rec-headline{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+.rec-detail{font-size:13px;color:rgba(255,255,255,.55);line-height:1.55;}
+
+/* ── BREAKEVEN ── */
+.breakeven-row{background:var(--surface);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;border:1px solid var(--border);}
+.be-label{font-size:13px;color:var(--text);}
+.be-label small{display:block;font-size:11px;color:var(--muted);}
+.be-value{font-size:1.2rem;font-weight:700;color:var(--navy);}
+.be-value.blurred{filter:blur(5px);user-select:none;}
+
+/* ── GATE OVERLAY ── */
+.gate-overlay{background:linear-gradient(to bottom,transparent,var(--white) 45%);position:absolute;bottom:0;left:0;right:0;height:180px;display:flex;align-items:flex-end;padding:20px;pointer-events:none;}
+.gate-inner{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;width:100%;pointer-events:all;box-shadow:0 4px 20px rgba(0,0,0,.08);}
+.gate-inner h4{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.gate-inner p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.gate-form{display:flex;gap:10px;}
+.gate-input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;transition:border-color .15s;}
+.gate-input:focus{border-color:var(--gold);}
+.gate-submit{padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.gate-submit:hover{opacity:.9;}
+.gate-wrapper{position:relative;}
+
+/* ── TRANSIT & SAVINGS ── */
+.transit-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;}
+.transit-card{background:var(--surface);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border);}
+.transit-num{font-size:1.3rem;font-weight:700;color:var(--navy);}
+.transit-label{font-size:11px;color:var(--muted);margin-top:2px;}
+.saving-highlight{background:var(--success-pale);border:1px solid #9fe1cb;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--success);margin-bottom:20px;font-weight:600;}
+.saving-highlight i{font-size:14px;}
+
+/* ── CTA BUTTONS ── */
+.cta-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cta-primary{padding:12px;background:var(--gold);color:var(--navy);border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.cta-primary:hover{opacity:.9;}
+.cta-secondary{padding:12px;background:transparent;color:var(--navy);border:1.5px solid var(--border);border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.cta-secondary:hover{border-color:var(--navy);}
+.cta-full{grid-column:span 2;}
+
+/* ── SIDEBAR ── */
+.sidebar-sticky{position:sticky;top:20px;display:flex;flex-direction:column;gap:16px;}
+.sidebar-panel{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 22px;}
+.sidebar-panel.dark{background:var(--navy);border-color:transparent;}
+.sidebar-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.sidebar-panel h4{font-family:var(--serif);font-size:1.15rem;color:var(--text);margin-bottom:8px;line-height:1.35;}
+.sidebar-panel.dark h4{color:#fff;}
+.sidebar-panel p{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px;}
+.sidebar-panel.dark p{color:rgba(255,255,255,.5);}
+.sidebar-cta-btn{width:100%;padding:11px;background:var(--gold);color:var(--navy);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:8px;}
+.sidebar-wa{width:100%;padding:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+.info-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.info-list li{display:flex;gap:10px;font-size:13px;color:var(--muted);align-items:flex-start;}
+.info-list i{color:var(--gold);font-size:13px;margin-top:1px;flex-shrink:0;}
+.data-badge{background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--navy);display:inline-block;margin-top:10px;}
+.rates-table{width:100%;font-size:12px;border-collapse:collapse;}
+.rates-table th{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border);text-align:left;}
+.rates-table td{padding:8px 0;border-bottom:1px solid var(--border);color:var(--text);}
+.rates-table td:last-child{text-align:right;font-weight:600;color:var(--navy);}
+.rates-table tr:last-child td{border-bottom:none;}
+
+/* ── QUOTE MODAL ── */
+.modal-backdrop{position:fixed;inset:0;background:rgba(10,22,40,.65);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-backdrop.open{display:flex;}
+.modal-box{background:var(--white);border-radius:16px;padding:32px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;}
+.modal-box h3{font-family:var(--serif);font-size:1.5rem;color:var(--text);margin-bottom:6px;}
+.modal-box .modal-sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1;}
+.modal-close:hover{color:var(--text);}
+.modal-box-inner{position:relative;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:13px;font-weight:600;color:var(--text);}
+.form-group input,.form-group select,.form-group textarea{padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);outline:none;transition:border-color .15s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
+.form-group textarea{resize:vertical;min-height:90px;}
+.prefilled-badge{background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--navy);margin-bottom:16px;display:flex;gap:8px;align-items:flex-start;}
+.prefilled-badge i{color:var(--gold);flex-shrink:0;margin-top:1px;}
+.modal-submit{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:18px;}
+.modal-submit:hover{opacity:.9;}
+.modal-success{text-align:center;padding:20px 0;display:none;}
+.modal-success i{font-size:48px;color:var(--gold);margin-bottom:16px;}
+.modal-success h4{font-size:1.3rem;font-weight:700;margin-bottom:8px;}
+.modal-success p{font-size:14px;color:var(--muted);}
+
+/* ── FOOTER NOTE ── */
+.footer-note{max-width:1160px;margin:0 auto;padding:0 5% 40px;font-size:12px;color:var(--muted);line-height:1.6;}
+.footer-note strong{color:var(--text);}
+.disclaimer-bar{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 5%;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;margin-bottom:0;}
+.disclaimer-bar i{color:var(--gold);flex-shrink:0;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){.calc-layout{grid-template-columns:1fr;}.sidebar-sticky{position:static;}}
+@media(max-width:640px){.route-grid{grid-template-columns:1fr;}.cargo-grid{grid-template-columns:repeat(2,1fr);}.input-row{grid-template-columns:1fr;}.compare-bars{grid-template-columns:1fr;}.transit-grid{grid-template-columns:1fr 1fr;}.cta-row{grid-template-columns:1fr;}.cta-full{grid-column:span 1;}.gate-form{flex-direction:column;}.form-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<div class="top-bar">
+  <a href="/" class="logo">UKF<span>.</span></a>
+  <a href="/insights" class="back-link"><i class="fas fa-arrow-left"></i> Back to Insights</a>
+</div>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <a href="/">Home</a><i class="fas fa-chevron-right"></i>
+  <a href="/tools/">Freight Tools</a><i class="fas fa-chevron-right"></i>
+  <span>FCL vs LCL Calculator</span>
+</div>
+
+<!-- Hero -->
+<div class="page-hero">
+  <p class="hero-eyebrow"><i class="fas fa-calculator"></i> Interactive Tool</p>
+  <h1>FCL vs LCL Cost Calculator</h1>
+  <p>Compare Full Container Load vs Less than Container Load shipping costs across 5 Jebel Ali trade lanes. Rates updated monthly by our operations team.</p>
+  <div class="hero-meta">
+    <span class="hero-badge"><i class="fas fa-calendar-check"></i><strong>Rates updated:</strong> May 2026</span>
+    <span class="hero-badge"><i class="fas fa-route"></i><strong>5 trade lanes</strong> covered</span>
+    <span class="hero-badge"><i class="fas fa-shield-halved"></i><strong>Includes</strong> BAF, THC &amp; doc fees</span>
+    <span class="hero-badge"><i class="fas fa-users"></i><strong>3,400+ UAE exporters</strong> used this tool</span>
+  </div>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer-bar">
+  <i class="fas fa-circle-info"></i>
+  Estimates are indicative only. Actual rates vary by carrier, commodity, and market conditions. Use this tool for planning — request a live quote for firm pricing.
+</div>
+
+<!-- Main Layout -->
+<div class="calc-layout">
+
+  <!-- LEFT: Calculator -->
+  <div>
+    <!-- Input Panel -->
+    <div class="panel" style="margin-bottom:20px;">
+      <div class="panel-title"><i class="fas fa-sliders"></i> Shipment Details</div>
+
+      <!-- Unit Toggle -->
+      <div class="unit-toggle">
+        <span class="unit-toggle-label">Units:</span>
+        <div class="toggle-btn-group">
+          <button class="toggle-btn active" id="btn-metric" onclick="setUnits('metric')">Metric (CBM / KG)</button>
+          <button class="toggle-btn" id="btn-imperial" onclick="setUnits('imperial')">Imperial (Cu Ft / Lbs)</button>
+        </div>
+      </div>
+
+      <!-- Route -->
+      <div class="field-group">
+        <label class="field-label">Trade Lane</label>
+        <div class="route-grid" id="routeGrid">
+          <div class="route-card selected" data-route="JBL-FXTX" onclick="selectRoute(this)">
+            <div class="route-name">JBL → Felixstowe / UK</div>
+            <div class="route-detail">~24–28 days sea</div>
+            <div class="route-check"><i class="fas fa-check"></i></div>
+          </div>
+          <div class="route-card" data-route="JBL-RTDM" onclick="selectRoute(this)">
+            <div class="route-name">JBL → Rotterdam / Europe</div>
+            <div class="route-detail">~22–26 days sea</div>
+            <div class="route-check"><i class="fas fa-check"></i></div>
+          </div>
+          <div class="route-card" data-route="JBL-LSAN" onclick="selectRoute(this)">
+            <div class="route-name">JBL → Los Angeles / USA</div>
+            <div class="route-detail">~14–18 days sea</div>
+            <div class="route-check"><i class="fas fa-check"></i></div>
+          </div>
+          <div class="route-card" data-route="JBL-SGPX" onclick="selectRoute(this)">
+            <div class="route-name">JBL → Singapore / ASEAN</div>
+            <div class="route-detail">~7–10 days sea</div>
+            <div class="route-check"><i class="fas fa-check"></i></div>
+          </div>
+          <div class="route-card" data-route="JBL-TNPK" onclick="selectRoute(this)">
+            <div class="route-name">JBL → Tanjung Priok / Indonesia</div>
+            <div class="route-detail">~10–14 days sea</div>
+            <div class="route-check"><i class="fas fa-check"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Volume & Weight -->
+      <div class="input-row field-group">
+        <div class="field-group" style="margin-bottom:0;">
+          <label class="field-label" id="vol-label">Volume (CBM)</label>
+          <div class="input-with-unit">
+            <input type="number" id="inputVolume" placeholder="e.g. 6" min="0.1" step="0.1" value="">
+            <span class="unit-label" id="vol-unit">CBM</span>
+          </div>
+        </div>
+        <div class="field-group" style="margin-bottom:0;">
+          <label class="field-label" id="wt-label">Gross Weight (KG)</label>
+          <div class="input-with-unit">
+            <input type="number" id="inputWeight" placeholder="e.g. 2000" min="1" step="1" value="">
+            <span class="unit-label" id="wt-unit">KG</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cargo Type -->
+      <div class="field-group">
+        <label class="field-label">Cargo Type</label>
+        <div class="cargo-grid" id="cargoGrid">
+          <div class="cargo-chip selected" data-cargo="general" onclick="selectCargo(this)">
+            <i class="fas fa-box-open"></i><span>General</span>
+          </div>
+          <div class="cargo-chip" data-cargo="hazardous" onclick="selectCargo(this)">
+            <i class="fas fa-radiation"></i><span>Hazardous</span>
+          </div>
+          <div class="cargo-chip" data-cargo="perishable" onclick="selectCargo(this)">
+            <i class="fas fa-snowflake"></i><span>Perishable</span>
+          </div>
+          <div class="cargo-chip" data-cargo="highvalue" onclick="selectCargo(this)">
+            <i class="fas fa-gem"></i><span>High Value</span>
+          </div>
+          <div class="cargo-chip" data-cargo="oversized" onclick="selectCargo(this)">
+            <i class="fas fa-up-right-and-down-left-from-center"></i><span>Oversized</span>
+          </div>
+          <div class="cargo-chip" data-cargo="pharma" onclick="selectCargo(this)">
+            <i class="fas fa-pills"></i><span>Pharma</span>
+          </div>
+        </div>
+        <div class="cargo-warning" id="cargoWarning">
+          <i class="fas fa-triangle-exclamation"></i>
+          <span id="cargoWarningText"></span>
+        </div>
+      </div>
+
+      <!-- Surcharge Toggles -->
+      <div class="field-group" style="margin-bottom:8px;">
+        <label class="field-label">Include in Estimate</label>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Bunker Adjustment Factor (BAF / FAF)</div>
+            <div class="toggle-sub">Fuel surcharge — currently elevated on most lanes</div>
+          </div>
+          <label class="ios-toggle"><input type="checkbox" id="togBAF" checked><span class="ios-track"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Terminal Handling Charges (THC)</div>
+            <div class="toggle-sub">Origin &amp; destination port fees</div>
+          </div>
+          <label class="ios-toggle"><input type="checkbox" id="togTHC" checked><span class="ios-track"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Documentation &amp; B/L Fees</div>
+            <div class="toggle-sub">Bill of Lading, Seaway Bill, courier</div>
+          </div>
+          <label class="ios-toggle"><input type="checkbox" id="togDoc" checked><span class="ios-track"></span></label>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">
+        <i class="fas fa-calculator"></i> Calculate & Compare
+      </button>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="panel" id="results-panel">
+      <div class="results-header">
+        <div class="results-route">Results for <strong id="res-route-label">—</strong></div>
+        <button class="results-toggle-btn" onclick="resetCalc()"><i class="fas fa-rotate-right"></i> Recalculate</button>
+      </div>
+
+      <!-- Comparison Bars -->
+      <div class="compare-bars" id="compareBars">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- Breakeven (gated) -->
+      <div class="gate-wrapper" id="breakevenWrapper">
+        <div class="breakeven-row">
+          <div class="be-label">Breakeven Point <small>Switch from LCL → FCL when volume exceeds:</small></div>
+          <div class="be-value blurred" id="breakevenVal">0.0 CBM</div>
+        </div>
+        <!-- Gate overlay -->
+        <div class="gate-overlay" id="gateOverlay">
+          <div class="gate-inner">
+            <h4><i class="fas fa-lock" style="color:var(--gold);font-size:14px;margin-right:6px;"></i>Unlock Exact Figures</h4>
+            <p>Enter your email to reveal the breakeven point and exact dollar amounts — we'll also send you a summary you can share with your team.</p>
+            <div class="gate-form">
+              <input type="email" class="gate-input" id="gateEmail" placeholder="your@company.com">
+              <button class="gate-submit" onclick="unlockResults()">Unlock Free</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommendation -->
+      <div class="recommendation-block" id="recBlock">
+        <div class="rec-icon"><i class="fas fa-lightbulb"></i></div>
+        <div class="rec-text">
+          <div class="rec-label">UKF Recommendation</div>
+          <div class="rec-headline" id="recHeadline">—</div>
+          <div class="rec-detail" id="recDetail">—</div>
+        </div>
+      </div>
+
+      <!-- Transit & Savings -->
+      <div class="transit-grid" id="transitGrid"></div>
+
+      <div class="saving-highlight" id="savingHighlight" style="display:none;">
+        <i class="fas fa-circle-check"></i>
+        <span id="savingText">—</span>
+      </div>
+
+      <!-- CTAs -->
+      <div class="cta-row" style="margin-top:16px;">
+        <button class="cta-primary" onclick="openQuoteModal()">
+          <i class="fas fa-file-invoice-dollar"></i> Request Live Quote
+        </button>
+        <button class="cta-secondary" onclick="openWhatsApp()">
+          <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp Us
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sidebar -->
+  <aside>
+    <div class="sidebar-sticky">
+
+      <!-- CTA Card -->
+      <div class="sidebar-panel dark">
+        <div class="sidebar-eyebrow">Talk to a specialist</div>
+        <h4>Need a firm quote?</h4>
+        <p>Our team can quote exact rates within 2 hours — including carrier selection, door delivery, and customs clearance.</p>
+        <button class="sidebar-cta-btn" onclick="openQuoteModal()">Request a Quote</button>
+        <button class="sidebar-wa" onclick="openWhatsApp()">
+          <i class="fab fa-whatsapp"></i> WhatsApp +971 55 257 2837
+        </button>
+      </div>
+
+      <!-- How It Works -->
+      <div class="sidebar-panel">
+        <div class="panel-title" style="margin-bottom:14px;"><i class="fas fa-circle-info"></i> How to Use</div>
+        <ul class="info-list">
+          <li><i class="fas fa-1"></i> Select your route and enter volume + weight</li>
+          <li><i class="fas fa-2"></i> Choose cargo type for special handling notes</li>
+          <li><i class="fas fa-3"></i> Toggle surcharges on/off to model scenarios</li>
+          <li><i class="fas fa-4"></i> Unlock exact figures and request a live quote</li>
+        </ul>
+      </div>
+
+      <!-- Live Rate Snapshot -->
+      <div class="sidebar-panel">
+        <div class="panel-title" style="margin-bottom:14px;"><i class="fas fa-chart-line"></i> Rate Snapshot <span style="font-size:10px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">— May 2026</span></div>
+        <table class="rates-table">
+          <thead><tr><th>Lane</th><th>FCL 20ft</th></tr></thead>
+          <tbody>
+            <tr><td>JBL → UK</td><td>$1,850</td></tr>
+            <tr><td>JBL → Rotterdam</td><td>$1,720</td></tr>
+            <tr><td>JBL → LA</td><td>$2,900</td></tr>
+            <tr><td>JBL → Singapore</td><td>$680</td></tr>
+            <tr><td>JBL → Tanjung Priok</td><td>$820</td></tr>
+          </tbody>
+        </table>
+        <span class="data-badge"><i class="fas fa-clock" style="margin-right:4px;font-size:10px;"></i> Updated May 2026</span>
+      </div>
+
+      <!-- Related Tools -->
+      <div class="sidebar-panel">
+        <div class="panel-title" style="margin-bottom:14px;"><i class="fas fa-toolbox"></i> Related Tools</div>
+        <ul class="info-list">
+          <li>
+            <i class="fas fa-box"></i>
+            <span><a href="/tools/volumetric-weight-calculator.html">Volumetric Weight Calculator</a> — for air freight</span>
+          </li>
+          <li>
+            <i class="fas fa-file-alt"></i>
+            <span><a href="/articles/uae-export-documents-guide.html">UAE Export Documents Guide</a></span>
+          </li>
+          <li>
+            <i class="fas fa-book-open"></i>
+            <span><a href="/articles/article-fcl-vs-lcl.html">FCL vs LCL: Full Decision Guide 2026</a></span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </aside>
+
+</div><!-- end calc-layout -->
+
+<!-- Quote Modal -->
+<div class="modal-backdrop" id="quoteModal">
+  <div class="modal-box" style="position:relative;">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-box-inner" id="modalFormWrap">
+      <h3>Request a Live Quote</h3>
+      <p class="modal-sub">Our team will respond within 2 hours with firm rates from verified carriers. No obligation.</p>
+
+      <div class="prefilled-badge" id="prefilledBadge" style="display:none;">
+        <i class="fas fa-magic-wand-sparkles"></i>
+        <span id="prefilledText">Your shipment details have been pre-filled from the calculator.</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="qName" placeholder="Ahmed Al Mansouri" required>
+        </div>
+        <div class="form-group">
+          <label>Company *</label>
+          <input type="text" id="qCompany" placeholder="Your Company LLC" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="qEmail" placeholder="ahmed@company.com" required>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="qPhone" placeholder="+971 55 000 0000">
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:14px;">
+        <label>Subject</label>
+        <input type="text" id="qSubject" placeholder="Quote Request: JBL → UK — 6 CBM / 2000 KG">
+      </div>
+      <div class="form-group">
+        <label>Shipment Details</label>
+        <textarea id="qMessage" rows="4" placeholder="Route, volume, weight, cargo type, target date…"></textarea>
+      </div>
+      <button class="modal-submit" onclick="submitQuote()">
+        <i class="fas fa-paper-plane" style="margin-right:8px;"></i> Send Quote Request
+      </button>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <i class="fas fa-circle-check"></i>
+      <h4>Quote Request Sent!</h4>
+      <p>Our team will be in touch within 2 hours with firm rates.<br>You can also reach us directly:</p>
+      <p style="margin-top:12px;"><strong>WhatsApp:</strong> <a href="https://wa.me/971552572837">+971 55 257 2837</a><br>
+      <strong>Email:</strong> <a href="mailto:info@ukfservices.com">info@ukfservices.com</a></p>
+      <button class="calc-btn" style="margin-top:20px;max-width:200px;margin-left:auto;margin-right:auto;" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer Note -->
+<div style="background:var(--white);border-top:1px solid var(--border);margin-top:0;">
+  <div class="footer-note" style="padding-top:28px;">
+    <strong>About this tool:</strong> Rates are indicative estimates based on market averages maintained by the UKF operations team. They include base ocean freight, BAF, THC (when toggled on), and documentation fees. Excluded: customs duties, local delivery, insurance, and Dangerous Goods surcharges. Rate accuracy: ±15–20% vs live market. Last rate review: May 2026. For firm pricing, always request a live quote.
+    <br><br>
+    <strong>UKF Sea &amp; Air Cargo Services LLC</strong> — Dubai Cargo Village, Office 2056-A · <a href="tel:+971552572837">+971 55 257 2837</a> · <a href="mailto:info@ukfservices.com">info@ukfservices.com</a>
+  </div>
+</div>
+
+<script>
+/* ── RATE DATA ── */
+/* Operations team: edit the RATES object to update monthly */
+const RATES = {
+  "JBL-FXTX": {
+    label:"Jebel Ali → Felixstowe (UK)",
+    short:"JBL → UK",
+    transitSea:26, transitAir:2,
+    fcl20: 1850, fcl40: 2400,
+    lclPerCBM: 95, lclMin: 380,
+    baf20: 280, baf40: 380, bafLCL: 18,
+    thcOrigin: 165, thcDest: 210,
+    docFee: 120,
+    lclBreakevenCBM: 8.2,
+  },
+  "JBL-RTDM": {
+    label:"Jebel Ali → Rotterdam (Europe)",
+    short:"JBL → Rotterdam",
+    transitSea:24, transitAir:2,
+    fcl20: 1720, fcl40: 2200,
+    lclPerCBM: 88, lclMin: 350,
+    baf20: 260, baf40: 340, bafLCL: 16,
+    thcOrigin: 165, thcDest: 195,
+    docFee: 110,
+    lclBreakevenCBM: 8.0,
+  },
+  "JBL-LSAN": {
+    label:"Jebel Ali → Los Angeles (USA)",
+    short:"JBL → LA",
+    transitSea:16, transitAir:3,
+    fcl20: 2900, fcl40: 3800,
+    lclPerCBM: 130, lclMin: 480,
+    baf20: 340, baf40: 450, bafLCL: 22,
+    thcOrigin: 165, thcDest: 250,
+    docFee: 145,
+    lclBreakevenCBM: 9.5,
+  },
+  "JBL-SGPX": {
+    label:"Jebel Ali → Singapore",
+    short:"JBL → Singapore",
+    transitSea:9, transitAir:1,
+    fcl20: 680, fcl40: 980,
+    lclPerCBM: 52, lclMin: 210,
+    baf20: 120, baf40: 160, bafLCL: 8,
+    thcOrigin: 165, thcDest: 145,
+    docFee: 90,
+    lclBreakevenCBM: 6.2,
+  },
+  "JBL-TNPK": {
+    label:"Jebel Ali → Tanjung Priok (Indonesia)",
+    short:"JBL → Indonesia",
+    transitSea:12, transitAir:2,
+    fcl20: 820, fcl40: 1180,
+    lclPerCBM: 62, lclMin: 240,
+    baf20: 140, baf40: 190, bafLCL: 10,
+    thcOrigin: 165, thcDest: 155,
+    docFee: 100,
+    lclBreakevenCBM: 6.8,
+  }
+};
+
+const CARGO_WARNINGS = {
+  hazardous: "Hazardous cargo (DG/IMO) requires IMDG classification, a Dangerous Goods Declaration, and carrier approval. DG surcharges of $200–$800 per container apply and are not included in this estimate. UKF handles full DG documentation — request a specialist quote.",
+  perishable: "Perishable cargo requires a reefer (refrigerated) container. Reefer surcharges of $600–$1,400 per 40ft apply depending on temperature range and lane. Not included in this estimate. Cold-chain handling at both Jebel Ali and the destination port is also required.",
+  highvalue: "High-value cargo may require declared value surcharges, enhanced security seals, and additional insurance. We recommend discussing secure handling options with our team before booking.",
+  oversized: "Oversized or out-of-gauge cargo requires a flat-rack or open-top container. OOG surcharges of $300–$1,200 per unit apply. Standard FCL pricing does not apply — please request a bespoke quote.",
+  pharma: "Pharmaceutical cargo may require temperature-controlled containers (GDP-compliant), specific documentation for UAE health authority approval, and chain-of-custody tracking. Regulatory surcharges not included in this estimate."
+};
+
+/* ── STATE ── */
+let currentUnits = 'metric';
+let selectedRoute = 'JBL-FXTX';
+let selectedCargo = 'general';
+let isUnlocked = false;
+let calcResult = {};
+
+/* ── UNIT TOGGLE ── */
+function setUnits(u) {
+  currentUnits = u;
+  document.getElementById('btn-metric').classList.toggle('active', u==='metric');
+  document.getElementById('btn-imperial').classList.toggle('active', u==='imperial');
+  document.getElementById('vol-label').textContent = u==='metric' ? 'Volume (CBM)' : 'Volume (Cu Ft)';
+  document.getElementById('wt-label').textContent = u==='metric' ? 'Gross Weight (KG)' : 'Gross Weight (Lbs)';
+  document.getElementById('vol-unit').textContent = u==='metric' ? 'CBM' : 'Cu Ft';
+  document.getElementById('wt-unit').textContent = u==='metric' ? 'KG' : 'Lbs';
+  const vEl=document.getElementById('inputVolume'), wEl=document.getElementById('inputWeight');
+  const v=parseFloat(vEl.value), w=parseFloat(wEl.value);
+  if(!isNaN(v)&&v>0){
+    vEl.value = u==='imperial' ? (currentUnits==='imperial'?v:(v*35.315).toFixed(2)) : (v/35.315).toFixed(2);
+  }
+  if(!isNaN(w)&&w>0){
+    wEl.value = u==='imperial' ? (currentUnits==='imperial'?w:(w*2.20462).toFixed(0)) : (w/2.20462).toFixed(0);
+  }
+}
+
+/* ── ROUTE SELECTION ── */
+function selectRoute(el){
+  document.querySelectorAll('.route-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedRoute = el.dataset.route;
+}
+
+/* ── CARGO SELECTION ── */
+function selectCargo(el){
+  document.querySelectorAll('.cargo-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCargo = el.dataset.cargo;
+  const warn = document.getElementById('cargoWarning');
+  const warnText = document.getElementById('cargoWarningText');
+  if(CARGO_WARNINGS[selectedCargo]){
+    warn.style.display='flex';
+    warnText.textContent = CARGO_WARNINGS[selectedCargo];
+  } else {
+    warn.style.display='none';
+  }
+}
+
+/* ── CALCULATE ── */
+function calculate(){
+  const rawVol = parseFloat(document.getElementById('inputVolume').value);
+  const rawWt  = parseFloat(document.getElementById('inputWeight').value);
+  if(!rawVol||!rawWt||rawVol<=0||rawWt<=0){
+    alert('Please enter both volume and weight to continue.');
+    return;
+  }
+  const cbm = currentUnits==='imperial' ? rawVol/35.315 : rawVol;
+  const kg  = currentUnits==='imperial' ? rawWt/2.20462 : rawWt;
+  const r   = RATES[selectedRoute];
+  const inclBAF = document.getElementById('togBAF').checked;
+  const inclTHC = document.getElementById('togTHC').checked;
+  const inclDoc = document.getElementById('togDoc').checked;
+
+  /* FCL cost */
+  const containerType = cbm<=14 ? '20ft' : '40ft';
+  const baseFreight   = cbm<=14 ? r.fcl20 : r.fcl40;
+  const bafFCL        = inclBAF ? (cbm<=14 ? r.baf20 : r.baf40) : 0;
+  const thcFCL        = inclTHC ? (r.thcOrigin + r.thcDest) : 0;
+  const docFCL        = inclDoc ? r.docFee : 0;
+  const fclTotal      = baseFreight + bafFCL + thcFCL + docFCL;
+
+  /* LCL cost */
+  const lclBase    = Math.max(cbm * r.lclPerCBM, r.lclMin);
+  const bafLCL     = inclBAF ? (cbm * r.bafLCL) : 0;
+  const thcLCL     = inclTHC ? (r.thcOrigin + r.thcDest) * 0.35 : 0;
+  const docLCL     = inclDoc ? r.docFee * 0.7 : 0;
+  const lclTotal   = lclBase + bafLCL + thcLCL + docLCL;
+
+  /* Breakeven */
+  const beFixed  = (inclTHC?(r.thcOrigin+r.thcDest):0) + (inclDoc?r.docFee:0);
+  const beFCLF   = (cbm<=14?r.fcl20:r.fcl40) + (inclBAF?(cbm<=14?r.baf20:r.baf40):0) + beFixed;
+  const beLCLPer = r.lclPerCBM + (inclBAF?r.bafLCL:0);
+  const beFixed2 = (inclTHC?(r.thcOrigin+r.thcDest)*0.35:0) + (inclDoc?r.docFee*0.7:0);
+  const breakevenCBM = (beFCLF - beFixed2) / beLCLPer;
+
+  calcResult = {cbm,kg,fclTotal,lclTotal,containerType,breakevenCBM,
+    baseFreight,bafFCL,thcFCL,docFCL,
+    lclBase,bafLCL,thcLCL,docLCL,
+    route:r, routeKey:selectedRoute};
+
+  renderResults();
+}
+
+/* ── RENDER ── */
+function renderResults(){
+  const {cbm,kg,fclTotal,lclTotal,containerType,breakevenCBM,
+    baseFreight,bafFCL,thcFCL,docFCL,lclBase,bafLCL,thcLCL,docLCL,route} = calcResult;
+
+  const fclWins = fclTotal <= lclTotal;
+  const saving  = Math.abs(fclTotal - lclTotal);
+
+  document.getElementById('res-route-label').textContent = route.short + ' · ' + cbm.toFixed(1)+' CBM / '+Math.round(kg)+' KG';
+
+  /* Comparison bars */
+  const bars = document.getElementById('compareBars');
+  bars.innerHTML = `
+    <div class="compare-bar-wrap ${fclWins?'winner':'loser'}">
+      ${fclWins?'<div class="winner-tag">RECOMMENDED</div>':''}
+      <div class="bar-mode">FCL (${containerType})</div>
+      <div class="bar-price ${isUnlocked?'':'blurred'}" id="fclPrice">$${fclTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')} <span>total</span></div>
+      <div class="bar-breakdown">
+        Base freight: $${baseFreight.toLocaleString()}${bafFCL?` · BAF: $${bafFCL}`:''}${thcFCL?` · THC: $${Math.round(thcFCL)}`:''}${docFCL?` · Docs: $${docFCL}`:''}
+      </div>
+      <div class="bar-detail-row"><span>Per CBM equivalent</span><strong>$${(fclTotal/cbm).toFixed(0)}</strong></div>
+      <div class="bar-detail-row"><span>Per KG equivalent</span><strong>$${(fclTotal/kg).toFixed(2)}</strong></div>
+    </div>
+    <div class="compare-bar-wrap ${!fclWins?'winner':'loser'}">
+      ${!fclWins?'<div class="winner-tag">RECOMMENDED</div>':''}
+      <div class="bar-mode">LCL (Shared)</div>
+      <div class="bar-price ${isUnlocked?'':'blurred'}" id="lclPrice">$${lclTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')} <span>total</span></div>
+      <div class="bar-breakdown">
+        Base freight: $${Math.round(lclBase).toLocaleString()}${bafLCL?` · BAF: $${Math.round(bafLCL)}`:''}${thcLCL?` · THC: $${Math.round(thcLCL)}`:''}${docLCL?` · Docs: $${Math.round(docLCL)}`:''}
+      </div>
+      <div class="bar-detail-row"><span>Per CBM</span><strong>$${(lclTotal/cbm).toFixed(0)}</strong></div>
+      <div class="bar-detail-row"><span>Per KG</span><strong>$${(lclTotal/kg).toFixed(2)}</strong></div>
+    </div>
+  `;
+
+  /* Breakeven */
+  const beEl = document.getElementById('breakevenVal');
+  beEl.textContent = breakevenCBM.toFixed(1) + ' CBM';
+  beEl.classList.toggle('blurred', !isUnlocked);
+  document.getElementById('gateOverlay').style.display = isUnlocked ? 'none' : 'flex';
+
+  /* Recommendation */
+  const mode = fclWins ? 'FCL' : 'LCL';
+  const oppMode = fclWins ? 'LCL' : 'FCL';
+  document.getElementById('recHeadline').textContent =
+    mode + ' is the better choice for this shipment.';
+  document.getElementById('recDetail').textContent =
+    fclWins
+      ? `At ${cbm.toFixed(1)} CBM, you have dedicated container space and lower per-CBM cost. You're ${(cbm/breakevenCBM*100).toFixed(0)}% of the way to filling a ${containerType}. Consider consolidating more cargo to maximise the container.`
+      : `At ${cbm.toFixed(1)} CBM, LCL gives you flexibility and avoids paying for space you don't use. LCL becomes less competitive above ${breakevenCBM.toFixed(1)} CBM on this lane — track your volume and switch when you're shipping regularly at that level.`;
+
+  /* Transit cards */
+  document.getElementById('transitGrid').innerHTML = `
+    <div class="transit-card"><div class="transit-num">${route.transitSea}d</div><div class="transit-label">Sea transit (avg)</div></div>
+    <div class="transit-card"><div class="transit-num">${route.transitAir}d</div><div class="transit-label">Air transit (for comparison)</div></div>
+    <div class="transit-card"><div class="transit-num">${containerType}</div><div class="transit-label">Container if FCL</div></div>
+  `;
+
+  /* Savings highlight */
+  const savEl = document.getElementById('savingHighlight');
+  const savTx = document.getElementById('savingText');
+  if(saving > 50){
+    savEl.style.display = 'flex';
+    savTx.textContent = mode + ' saves approximately $' + Math.round(saving).toLocaleString() + ' vs ' + oppMode + ' on this shipment.';
+  } else {
+    savEl.style.display = 'none';
+  }
+
+  /* Show results */
+  document.getElementById('results-panel').style.display='block';
+  document.getElementById('results-panel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── GATE UNLOCK ── */
+function unlockResults(){
+  const email = document.getElementById('gateEmail').value.trim();
+  if(!email || !email.includes('@')){alert('Please enter a valid email address.');return;}
+  isUnlocked = true;
+  document.getElementById('gateOverlay').style.display='none';
+  /* Remove blur from prices */
+  document.querySelectorAll('.bar-price').forEach(el=>el.classList.remove('blurred'));
+  document.getElementById('breakevenVal').classList.remove('blurred');
+  /* Pre-fill quote email field */
+  document.getElementById('qEmail').value = email;
+  /* Track (if GA loaded) */
+  if(typeof gtag!=='undefined'){
+    gtag('event','ukf_gate_unlock',{event_category:'Lead Generation',event_label:'fcl_lcl_calculator'});
+  }
+}
+
+/* ── RESET ── */
+function resetCalc(){
+  document.getElementById('results-panel').style.display='none';
+  document.getElementById('inputVolume').value='';
+  document.getElementById('inputWeight').value='';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── QUOTE MODAL ── */
+function openQuoteModal(){
+  const r = RATES[selectedRoute];
+  const cbm = parseFloat(document.getElementById('inputVolume').value)||0;
+  const kg  = parseFloat(document.getElementById('inputWeight').value)||0;
+  const unit_v = currentUnits==='metric'?'CBM':'Cu Ft';
+  const unit_w = currentUnits==='metric'?'KG':'Lbs';
+  const badge = document.getElementById('prefilledBadge');
+  const subj  = document.getElementById('qSubject');
+  const msg   = document.getElementById('qMessage');
+
+  if(cbm>0 && kg>0 && r){
+    badge.style.display='flex';
+    document.getElementById('prefilledText').textContent =
+      `Your shipment details have been pre-filled: ${r.short} · ${cbm} ${unit_v} · ${kg} ${unit_w} · ${selectedCargo} cargo.`;
+    subj.value = `Quote Request: ${r.short} — ${cbm} ${unit_v} / ${kg} ${unit_w}`;
+    msg.value  = `Route: ${r.label}\nVolume: ${cbm} ${unit_v}\nWeight: ${kg} ${unit_w}\nCargo Type: ${selectedCargo}\nEstimated Shipping Date: \n\nAdditional notes: `;
+  } else {
+    badge.style.display='none';
+  }
+
+  document.getElementById('quoteModal').classList.add('open');
+  document.getElementById('modalFormWrap').style.display='block';
+  document.getElementById('modalSuccess').style.display='none';
+}
+
+function closeModal(){
+  document.getElementById('quoteModal').classList.remove('open');
+}
+
+function submitQuote(){
+  const name = document.getElementById('qName').value.trim();
+  const email= document.getElementById('qEmail').value.trim();
+  if(!name||!email){alert('Please fill in your name and email.');return;}
+  /* Fire GA event */
+  if(typeof gtag!=='undefined'){
+    gtag('event','ukf_quote_request',{event_category:'Lead Generation',event_label:'fcl_lcl_quote_modal',
+      event_value: calcResult.cbm||0});
+  }
+  document.getElementById('modalFormWrap').style.display='none';
+  document.getElementById('modalSuccess').style.display='block';
+}
+
+function openWhatsApp(){
+  const r = RATES[selectedRoute]||{};
+  const cbm = parseFloat(document.getElementById('inputVolume').value)||0;
+  const kg  = parseFloat(document.getElementById('inputWeight').value)||0;
+  let msg = "Hi, I'd like a freight quote.";
+  if(cbm>0 && r.short){
+    msg = `Hi, I'd like a quote for: ${r.short||''} — ${cbm} ${currentUnits==='metric'?'CBM':'Cu Ft'} / ${kg} ${currentUnits==='metric'?'KG':'Lbs'} — ${selectedCargo} cargo.`;
+  }
+  window.open('https://wa.me/971552572837?text='+encodeURIComponent(msg),'_blank');
+}
+
+/* Close modal on backdrop click */
+document.getElementById('quoteModal').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
+</script>
+    <footer style="padding: 20px; text-align: center; border-top: 1px solid #ccc;">
+        <p>&copy; 2026 UKF Services. All rights reserved.</p>
+        <p>
+            <a href="/privacy-policy">Privacy Policy</a> | 
+            <a href="/terms-of-service">Terms of Service</a>
+        </p>
+        <div>
+            <a href="https://www.linkedin.com/company/ukf-services-dubai" target="_blank">LinkedIn</a> | 
+            <a href="https://twitter.com/ukfservicesDXB" target="_blank">Twitter/X</a>
+        </div>
+    </footer>
+</body>
+</html>
+

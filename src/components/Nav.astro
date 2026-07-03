@@ -1,0 +1,338 @@
+---
+const pathname = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  {
+    label: 'Services',
+    dropdown: [
+      { href: '/services/air-freight', label: 'Air Freight' },
+      { href: '/services/ocean-freight', label: 'Ocean Freight' },
+      { href: '/services/customs-clearance', label: 'Customs Clearance' },
+      { href: '/services/road-freight', label: 'Road Freight' },
+      { href: '/services/cross-border', label: 'Cross-Border Road' },
+      { href: '/services/incoterms', label: 'Incoterms Advisory' },
+      { href: '/services/warehousing', label: 'Warehousing' },
+      { href: '/services/project-cargo', label: 'Project Cargo' },
+    ]
+  },
+  { href: '/process', label: 'Process' },
+  { href: '/insights', label: 'Insights' },
+  { href: '/testimonials', label: 'Testimonials' },
+  { href: '/indonesia', label: 'Indonesia', highlight: true },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header class="site-header" id="site-header">
+  <div class="header-inner container">
+
+    <a href="/" class="logo" aria-label="UKF Services Home">
+      <span class="logo-ukf">UKF</span>
+      <span class="logo-services">SERVICES</span>
+      <span class="logo-sub">Sea & Air Cargo</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      {navLinks.map(link => (
+        link.dropdown ? (
+          <div class="nav-dropdown-wrap">
+            <button
+              class={`nav-link nav-link--dropdown ${pathname.startsWith('/services') ? 'active' : ''}`}
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              {link.label}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14" style="margin-left:4px;opacity:0.7">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <div class="nav-dropdown" role="menu">
+              {link.dropdown.map((item: {href: string, label: string}) => (
+                <a href={item.href} class="nav-dropdown-item" role="menuitem">{item.label}</a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={link.href}
+            class={`nav-link ${link.highlight ? 'nav-link--highlight' : ''} ${pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href)) ? 'active' : ''}`}
+          >
+            {link.label}
+          </a>
+        )
+      ))}
+    </nav>
+
+    <a href="/contact" class="nav-cta">Contact</a>
+
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="/" class="mobile-link">Home</a>
+    <div class="mobile-section-label">Services</div>
+    <a href="/services/air-freight" class="mobile-link mobile-link--indent">Air Freight</a>
+    <a href="/services/ocean-freight" class="mobile-link mobile-link--indent">Ocean Freight</a>
+    <a href="/services/customs-clearance" class="mobile-link mobile-link--indent">Customs Clearance</a>
+    <a href="/services/road-freight" class="mobile-link mobile-link--indent">Road Freight</a>
+    <a href="/services/cross-border" class="mobile-link mobile-link--indent">Cross-Border Road</a>
+    <a href="/services/incoterms" class="mobile-link mobile-link--indent">Incoterms Advisory</a>
+    <a href="/services/warehousing" class="mobile-link mobile-link--indent">Warehousing</a>
+    <a href="/services/project-cargo" class="mobile-link mobile-link--indent">Project Cargo</a>
+    <a href="/process" class="mobile-link">Process</a>
+    <a href="/insights" class="mobile-link">Insights</a>
+    <a href="/testimonials" class="mobile-link">Testimonials</a>
+    <a href="/services/indonesia" class="mobile-link mobile-link--highlight">Indonesia</a>
+    <a href="/about" class="mobile-link">About</a>
+    <a href="/contact" class="mobile-cta">Contact Us</a>
+  </div>
+</header>
+
+<script is:inline>
+  var header = document.getElementById('site-header');
+  var toggle = document.getElementById('mobile-toggle');
+  var menu = document.getElementById('mobile-menu');
+
+  window.addEventListener('scroll', function() {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  toggle.addEventListener('click', function() {
+    var open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-hidden', String(!open));
+    toggle.classList.toggle('open', open);
+  });
+
+  document.querySelectorAll('.nav-dropdown-wrap').forEach(function(wrap) {
+    var btn = wrap.querySelector('.nav-link--dropdown');
+    var dropdown = wrap.querySelector('.nav-dropdown');
+
+    wrap.addEventListener('mouseenter', function() {
+      dropdown.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    });
+    wrap.addEventListener('mouseleave', function() {
+      dropdown.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+    btn.addEventListener('click', function() {
+      var isOpen = dropdown.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) {
+      if (!d.closest('.nav-dropdown-wrap').contains(e.target)) {
+        d.classList.remove('open');
+      }
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+    background: rgba(10, 22, 40, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    transition: box-shadow 0.3s ease;
+  }
+  .site-header.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    transition: height 0.3s ease;
+  }
+  .site-header.scrolled .header-inner { height: 58px; }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    text-decoration: none;
+    flex-shrink: 0;
+    margin-right: 8px;
+  }
+  .logo-ukf {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #c9a84c;
+    letter-spacing: 2px;
+  }
+  .logo-services {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 3px;
+  }
+  .logo-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 1px;
+  }
+
+  .main-nav {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    flex: 1;
+    justify-content: center;
+  }
+  @media (min-width: 960px) { .main-nav { display: flex; } }
+
+  .nav-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    padding: 8px 14px;
+    border-radius: 4px;
+    letter-spacing: 0.2px;
+    transition: color 0.2s, background 0.2s;
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .nav-link:hover { color: #ffffff; background: rgba(255,255,255,0.06); }
+  .nav-link.active { color: #c9a84c; }
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 14px; right: 14px;
+    height: 2px;
+    background: #c9a84c;
+    border-radius: 2px;
+  }
+  .nav-link--highlight { color: #c9a84c !important; }
+  .nav-link--highlight:hover { background: rgba(201,168,76,0.1); }
+
+  .nav-dropdown-wrap { position: relative; padding-bottom: 8px; }
+  .nav-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    min-width: 210px;
+    background: #0a1628;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    padding: 8px;
+    z-index: 100;
+  }
+  .nav-dropdown.open { display: block; }
+  .nav-dropdown-item {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    padding: 9px 14px;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-item:hover { color: #c9a84c; background: rgba(201,168,76,0.08); }
+
+  .nav-cta {
+    display: none;
+    background: #c9a84c;
+    color: #0a1628;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 22px;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  .nav-cta:hover { background: #e8c96a; transform: translateY(-1px); }
+  @media (min-width: 960px) { .nav-cta { display: block; } }
+
+  .mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .mobile-toggle span {
+    display: block;
+    width: 24px; height: 2px;
+    background: #c9a84c;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  .mobile-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .mobile-toggle.open span:nth-child(2) { opacity: 0; }
+  .mobile-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  @media (min-width: 960px) { .mobile-toggle { display: none; } }
+
+  .mobile-menu {
+    background: #0a1628;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+  .mobile-menu.open { max-height: 700px; padding: 8px 0 24px; }
+  .mobile-link {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    padding: 11px 24px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .mobile-link:hover { color: #c9a84c; background: rgba(201,168,76,0.05); }
+  .mobile-link--indent { padding-left: 40px; font-size: 14px; color: rgba(255,255,255,0.6); }
+  .mobile-link--highlight { color: #c9a84c; }
+  .mobile-section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding: 12px 24px 4px;
+  }
+  .mobile-cta {
+    display: block;
+    margin: 16px 24px 0;
+    background: #c9a84c;
+    color: #0a1628;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 13px 20px;
+    border-radius: 6px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .mobile-cta:hover { background: #e8c96a; }
+
+  @media (min-width: 960px) { .mobile-menu { display: none; } }
+</style>
