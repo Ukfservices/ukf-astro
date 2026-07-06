@@ -101,7 +101,7 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
             <span class="category-pill" style={`background:${getCategoryColor(article.category as string)}`}>
               {article.category}
             </span>
-            {article.featured && <span class="featured-badge">Featured</span>}
+            {Boolean(article.featured) && <span class="featured-badge">Featured</span>}
           </div>
           <h1 class="hero-title">{article.title}</h1>
           <div class="hero-byline">
@@ -121,7 +121,7 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
                 {formatDate(article.published_date as string)}
               </span>
-              {article.views && (
+              {Boolean(article.views) && (
                 <span>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
                   {article.views} views

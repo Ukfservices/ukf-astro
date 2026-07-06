@@ -197,7 +197,7 @@ const trendingFallback = trending.length > 0 ? trending : articles.slice(0, 5);
                   <span class="card-pill" style={`background:${getCategoryColor(article.category)}`}>
                     {article.category}
                   </span>
-                  {article.trending && <span class="card-trending">Trending</span>}
+                  {Boolean(article.trending) && <span class="card-trending">Trending</span>}
                 </div>
                 <div class="card-body">
                   <h3 class="card-title">{article.title}</h3>

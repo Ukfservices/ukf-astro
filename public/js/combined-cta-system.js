@@ -8,10 +8,10 @@
 
   // Config
   var FORMSPREE_URL = 'https://formspree.io/f/xzdpekbl';
-  var SHOW_DELAY = 45000; // 45 seconds on page
+  var SHOW_DELAY = 25000; // 25 seconds on page
   var EXIT_SENSITIVITY = 20; // px from top to trigger exit intent
   var COOKIE_NAME = 'ukf_cta_shown';
-  var COOKIE_DAYS = 7;
+  var COOKIE_DAYS = 4;
 
   // State
   var triggered = false;

@@ -118,13 +118,17 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
     img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
 
+ </style>
+  <style is:global>
   .container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 48px;
-}
-@media (max-width: 1024px) { .container { padding: 0 32px; } }
-@media (max-width: 768px) { .container { padding: 0 20px; } }
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+  @media (max-width: 1024px) { .container { padding: 0 32px; } }
+  @media (max-width: 768px) { .container { padding: 0 20px; } }
+  </style>
+  <style>
 
     /* WhatsApp Float */
     .whatsapp-float {
@@ -271,7 +275,7 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
   </script>
 <!-- Smart Assistant Widget -->
 <script src="/js/smart-assistant.js" is:inline></script>
-<script src="/js/combined-cta-system.js" is:inline></script>
+
 <!-- CTA System (exit intent + lead magnet) -->
 <script src="/js/combined-cta-system.js" is:inline></script>
 </body>
