@@ -153,7 +153,7 @@ const trendingFallback = trending.length > 0 ? trending : articles.slice(0, 5);
                 href={`/articles/${article.slug}`}
                 class={`carousel-slide ${i === 0 ? 'active' : ''}`}
                 data-index={i}
-                style={`background-image: url('${article.image_url || '/images/cargo-hero.jpg'}')`}
+                style={`background-image: url('${article.image_url || '/images/hero-cargo.webp'}')`}
               >
                 <div class="carousel-overlay"></div>
                 <div class="carousel-content">
@@ -193,7 +193,7 @@ const trendingFallback = trending.length > 0 ? trending : articles.slice(0, 5);
                 data-title={article.title.toLowerCase()}
                 data-excerpt={(article.excerpt || '').toLowerCase()}
               >
-                <div class="card-image" style={`background-image: url('${article.image_url || '/images/cargo-hero.jpg'}')`}>
+                <div class="card-image" style={`background-image: url('${article.image_url || '/images/hero-cargo.webp'}')`}>
                   <span class="card-pill" style={`background:${getCategoryColor(article.category)}`}>
                     {article.category}
                   </span>

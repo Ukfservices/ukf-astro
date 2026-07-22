@@ -5,6 +5,9 @@ export const prerender = false;
 
 const { slug } = Astro.params;
 
+// Legacy slug redirects are handled centrally in src/middleware.ts, which runs
+// before this route -- do not re-add per-route redirect logic here.
+
 let article = null;
 let relatedArticles = [];
 let error = null;
@@ -94,7 +97,7 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
   {article && (
     <>
       <!-- HERO -->
-      <section class="article-hero" style={`background-image: url('${article.image_url || '/images/cargo-hero.jpg'}')`}>
+      <section class="article-hero" style={`background-image: url('${article.image_url || '/images/hero-cargo.webp'}')`}>
         <div class="hero-overlay"></div>
         <div class="hero-content container">
           <div class="hero-meta">
@@ -230,7 +233,7 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
               <div class="related-grid">
                 {relatedArticles.map((rel: any) => (
                   <a href={`/articles/${rel.slug}`} class="related-card">
-                    <div class="related-card-image" style={`background-image:url('${rel.image_url || '/images/cargo-hero.jpg'}')`}>
+                    <div class="related-card-image" style={`background-image:url('${rel.image_url || '/images/hero-cargo.webp'}')`}>
                       <span class="related-card-category" style={`background:${getCategoryColor(rel.category)}`}>{rel.category}</span>
                     </div>
                     <div class="related-card-body">

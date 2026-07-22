@@ -20,8 +20,11 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="UTF-8" />
+  <link rel="preload" as="image" href="/images/hero-cargo.webp" fetchpriority="high" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.clarity.ms" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0a1628" />
 
@@ -280,3 +283,7 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
 <script src="/js/combined-cta-system.js" is:inline></script>
 </body>
 </html>
+
+
+
+

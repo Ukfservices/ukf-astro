@@ -31,3 +31,17 @@ Write-Host "Deploying to Cloudflare..." -ForegroundColor Cyan
 npx wrangler pages deploy dist\client --project-name ukfservices --commit-dirty=true
 
 Write-Host "Done!" -ForegroundColor Green
+
+# --- Post-deploy link/redirect check (informational only, never blocks) ---
+# Runs check-links.ps1 against the live site to catch broken redirects or
+# article pages that 404/500. This never fails the deploy itself -- the
+# deploy above has already completed successfully by this point. Any
+# failures printed here are a signal to investigate, not a rollback trigger.
+Write-Host "`nRunning post-deploy link check..." -ForegroundColor Cyan
+Start-Sleep -Seconds 5   # brief pause for Cloudflare edge propagation
+try {
+    & "$PSScriptRoot\check-links.ps1"
+} catch {
+    Write-Host "Link check itself failed to run (this does not mean the deploy failed): $_" -ForegroundColor Yellow
+}
+

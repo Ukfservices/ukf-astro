@@ -1,0 +1,16 @@
+---
+// Dedicated route for the literal legacy URL /articles/index.html.
+//
+// This exists purely to avoid a crash: Astro's dynamic [slug].astro route
+// throws "TypeError: Missing parameter: slug" when it tries to match a
+// request ending in "index.html" -- its internal router fails to extract a
+// slug value for this specific literal path, before any of our own code
+// (including middleware.ts) ever runs. Astro matches exact, literally-named
+// routes before dynamic ones, so this file intercepts the request first and
+// sidesteps the crash entirely.
+//
+// /articles/index.html was a real file on the old static site. This just
+// sends it to the current article listing page.
+export const prerender = false;
+return Astro.redirect('/insights', 301);
+---

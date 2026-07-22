@@ -9,7 +9,7 @@
 /articles/shipping-trends-2025                /articles/shipping-trends-2026                         301
 /insights/uae-us-trade-corridor               /articles/uae-us-trade-corridor                        301
 /articles/logistics-process                   /insights                                              301
-
+/articles/article-fcl-vs-lcl                  /articles/fcl-vs-lcl-shipping-the-2026-decision-framework 301
 # Tool URLs without .html extension → .html versions (static files in public/)
 /tools/fcl-lcl-calculator                     /tools/fcl-lcl-calculator.html                        301
 
