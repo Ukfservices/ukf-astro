@@ -27,3 +27,5 @@ pnpm-debug.log*
 
 
 _legacy_backup/
+
+psi-raw.json

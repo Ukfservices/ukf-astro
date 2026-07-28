@@ -1,5 +1,4 @@
-import { defineMiddleware } from 'astro:middleware';
-
+﻿import { defineMiddleware } from 'astro:middleware';
 // Single source of truth for every legacy URL that needs to 301 somewhere else.
 // This runs before ANY route on the site, because the site builds as a single
 // _worker.js (full SSR / "Advanced Mode" on Cloudflare Pages) -- which means
@@ -20,25 +19,31 @@ const legacyRedirects: Record<string, string> = {
   '/articles/dubai-cargo-village-guide': '/articles/august-dubai-cargo-village',
   '/articles/shipping-trends-2025': '/articles/shipping-trends-2026',
   '/articles/logistics-process': '/insights',
-
+  '/articles/index.html': '/insights',
+  // Legacy static-site homepage URL -- flagged as 404 in GSC (7/24/26),
+  // last crawled at https://www.ukfservices.com/index.html
+  '/index.html': '/',
   // Legacy /insights/* slugs that should live under /articles/*
   '/insights/uae-us-trade-corridor': '/articles/uae-us-trade-corridor',
-
-  // Tool URLs without .html extension -> static .html versions in public/
-  '/tools/fcl-lcl-calculator': '/tools/fcl-lcl-calculator.html',
+  // Tool URLs -- redirect broken tool pages to services
+  '/tools/fcl-lcl-calculator': '/services',
+  '/tools/fcl-lcl-calculator.html': '/services',
+  '/tools/volumetric-weight-calculator.html': '/services',
+  '/tools/incoterms-guide': '/services',
+  // Service sub-pages -- redirect to main services page
+  '/services/sea-freight': '/services',
+  // Legacy checklist page -- redirect to closest article
+  '/uae-customs-documents-checklist': '/articles/uae-customs-clearance-guide',
 };
-
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url;
   // Normalise trailing slash for matching, but never touch the root path
   const key = pathname !== '/' && pathname.endsWith('/')
     ? pathname.slice(0, -1)
     : pathname;
-
   const target = legacyRedirects[key];
   if (target) {
     return context.redirect(target, 301);
   }
-
   return next();
 });

@@ -1,4 +1,4 @@
-# check-links.ps1
+﻿# check-links.ps1
 # Run manually after any deploy. Checks:
 #   1. Every legacy redirect in src/middleware.ts actually 301s correctly
 #   2. Every live article slug in D1 renders (200), not 404/500
@@ -23,7 +23,7 @@ $redirects = @{
     "/articles/shipping-trends-2025"            = "/articles/shipping-trends-2026"
     "/articles/logistics-process"               = "/insights"
     "/insights/uae-us-trade-corridor"           = "/articles/uae-us-trade-corridor"
-    "/tools/fcl-lcl-calculator"                 = "/tools/fcl-lcl-calculator.html"
+    "/tools/fcl-lcl-calculator"                 = "/services"
     "/articles/index.html"                      = "/insights"
 }
 
@@ -112,3 +112,4 @@ if ($failCount -eq 0) {
 } else {
     Write-Host "$failCount check(s) failed -- see above." -ForegroundColor Red
 }
+
