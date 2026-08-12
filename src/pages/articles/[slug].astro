@@ -109,10 +109,14 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
           <h1 class="hero-title">{article.title}</h1>
           <div class="hero-byline">
             <div class="byline-author">
-              <div class="author-avatar">MS</div>
+              <div class="author-avatar">{article.author?.split(' ').map((n: string) => n[0]).join('')}</div>
               <div>
-                <span class="author-name">Mirza Salim Baig</span>
-                <span class="author-role">CEO, UKF Services</span>
+                <span class="author-name">{article.author}</span>
+                <span class="author-role">
+                  {article.author === 'Husein Shaikh' 
+                    ? 'Founder & Managing Director, UKF Services'
+                    : 'UKF Logistics Team'}
+                </span>
               </div>
             </div>
             <div class="byline-stats">
@@ -188,21 +192,31 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
             </div>
 
             <!-- Author Bio -->
-            <div class="author-bio fade-up">
-              <div class="author-bio-avatar">MS</div>
-              <div class="author-bio-content">
-                <div class="author-bio-header">
-                  <div>
-                    <h3 class="author-bio-name">Mirza Salim Baig</h3>
-                    <p class="author-bio-role">Chief Executive Officer, UKF Sea & Air Cargo Services</p>
-                  </div>
-                  <div class="author-bio-badge">25+ Years</div>
-                </div>
-                <p class="author-bio-text">
-                  Mirza Salim Baig has led UKF Services from Dubai Cargo Village since 2008, building one of the UAE's most trusted specialist freight operations. With over 25 years in international logistics, he brings direct expertise across air freight, sea freight, and UAE customs clearance — personally overseeing complex shipments for 200+ UAE exporters across global trade corridors.
-                </p>
-              </div>
-            </div>
+<div class="author-bio fade-up">
+  <div class="author-bio-avatar">
+    {article.author?.split(' ').map((n: string) => n[0]).join('')}
+  </div>
+  <div class="author-bio-content">
+    <div class="author-bio-header">
+      <div>
+        <h3 class="author-bio-name">{article.author}</h3>
+        <p class="author-bio-role">
+          {article.author === 'Husein Shaikh' 
+            ? 'Founder & Managing Director, UKF Sea & Air Cargo Services'
+            : 'UKF Logistics Team, Dubai Cargo Village'}
+        </p>
+      </div>
+      <div class="author-bio-badge">
+        {article.author === 'Husein Shaikh' ? 'Since 2008' : 'Expert Contributors'}
+      </div>
+    </div>
+    {article.author !== 'Husein Shaikh' && (
+      <p class="author-bio-text">
+        The UKF Logistics Team brings collective expertise across air freight, sea freight, customs clearance, and UAE trade corridor management. Drawing on 15+ years of operational excellence from Dubai Cargo Village, we share insights and strategies built from direct experience with 200+ regional exporters.
+      </p>
+    )}
+  </div>
+</div>
 
             <!-- Share Buttons -->
             <div class="share-section fade-up">
@@ -263,8 +277,8 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
         "datePublished": article.published_date,
         "author": {
           "@type": "Person",
-          "name": "Mirza Salim Baig",
-          "jobTitle": "CEO",
+          "name": article.author,
+          "jobTitle": article.author === 'Husein Shaikh' ? "Founder & Managing Director" : "UKF Logistics Team",
           "worksFor": { "@type": "Organization", "name": "UKF Services" }
         },
         "publisher": {
@@ -274,6 +288,13 @@ const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
         },
         "mainEntityOfPage": `https://ukfservices.com/articles/${article.slug}`
       })} />
+      {article.faq_json && (
+        <script type="application/ld+json" set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": JSON.parse(article.faq_json as string)
+        })} />
+      )}
 
     </>
   )}

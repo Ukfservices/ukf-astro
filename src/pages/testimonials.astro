@@ -181,7 +181,7 @@ const sectors = [...new Set(testimonials.map((t: any) => t.sector).filter(Boolea
   </script>
 
   <!-- JSON-LD -->
-  <script type="application/ld+json">{JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "UKF Services",
@@ -192,7 +192,7 @@ const sectors = [...new Set(testimonials.map((t: any) => t.sector).filter(Boolea
       "bestRating": "5",
       "worstRating": "1"
     }
-  })}</script>
+  })} />
 
 </PageLayout>
 

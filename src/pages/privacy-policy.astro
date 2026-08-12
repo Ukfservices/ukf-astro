@@ -144,13 +144,13 @@ export const prerender = false;
     </div>
   </section>
 
-  <script type="application/ld+json">{JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Privacy Policy",
     "description": "Privacy Policy for UKF Services",
     "url": "https://ukfservices.com/privacy-policy"
-  })}</script>
+  })} />
 
 </PageLayout>
 

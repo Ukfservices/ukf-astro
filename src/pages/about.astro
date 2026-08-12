@@ -226,7 +226,7 @@ export const prerender = false;
   </section>
 
   <!-- JSON-LD -->
-  <script type="application/ld+json">{JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "AboutPage",
     "name": "About UKF Services",
@@ -244,7 +244,7 @@ export const prerender = false;
         "addressCountry": "AE"
       }
     }
-  })}</script>
+  })} />
 
 </PageLayout>
 

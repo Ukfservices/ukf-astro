@@ -320,7 +320,7 @@ export const prerender = false;
   </section>
 
   <!-- JSON-LD -->
-  <script type="application/ld+json">{JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "HowTo",
     "name": "UKF Services Freight Forwarding Process",
@@ -332,7 +332,7 @@ export const prerender = false;
       { "@type": "HowToStep", "position": 3, "name": "Execution & Customs Clearance", "text": "Cargo collection, UAE Customs clearance with 100% compliance record, real-time tracking and proactive updates." },
       { "@type": "HowToStep", "position": 4, "name": "Delivery & Confirmation", "text": "Last-mile delivery coordination, proof of delivery, post-shipment review and follow-up." }
     ]
-  })}</script>
+  })} />
 
 </PageLayout>
 

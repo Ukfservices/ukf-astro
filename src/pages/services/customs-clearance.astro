@@ -108,7 +108,7 @@ export const prerender = false;
     </div>
   </section>
 
-  <script type="application/ld+json">{JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Customs Clearance",
@@ -116,7 +116,7 @@ export const prerender = false;
     "provider": { "@type": "Organization", "name": "UKF Services" },
     "areaServed": "Worldwide",
     "url": "https://ukfservices.com/services/customs-clearance"
-  })}</script>
+  })} />
 
 </PageLayout>
 

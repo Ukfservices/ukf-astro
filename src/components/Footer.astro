@@ -266,7 +266,11 @@ const currentYear = new Date().getFullYear();
   /* Bottom */
   .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 20px 0;
+    /* Extra bottom padding reserves space for the stacked floating widgets
+       (.whatsapp-float in BaseLayout.astro + #ukf-bubble in smart-assistant.js),
+       which together occupy ~160px fixed at bottom-right of every viewport.
+       Without this, scrolling to page-end puts these links directly under them. */
+    padding: 20px 0 190px;
   }
   .footer-bottom-inner {
     display: flex;

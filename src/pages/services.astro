@@ -126,7 +126,7 @@ const services = [
   </section>
 
   <!-- JSON-LD -->
-  <script type="application/ld+json">{JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "UKF Services - Freight & Logistics Services",
@@ -142,7 +142,7 @@ const services = [
         "provider": { "@type": "Organization", "name": "UKF Services" }
       }
     }))
-  })}</script>
+  })} />
 
 </PageLayout>
 

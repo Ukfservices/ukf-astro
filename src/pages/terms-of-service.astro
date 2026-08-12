@@ -170,13 +170,13 @@ export const prerender = false;
     </div>
   </section>
 
-  <script type="application/ld+json">{JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Terms of Service",
     "description": "Terms of Service for UKF Services freight forwarding and logistics",
     "url": "https://ukfservices.com/terms-of-service"
-  })}</script>
+  })} />
 
 </PageLayout>
 
