@@ -18,6 +18,11 @@ const legacyRedirects: Record<string, string> = {
   '/articles/how-jebel-ali-port-works': '/articles/september-jebel-ali-port',
   '/articles/dubai-cargo-village-guide': '/articles/august-dubai-cargo-village',
   '/articles/shipping-trends-2025': '/articles/shipping-trends-2026',
+  // Duplicate-topic consolidation: id 5 covered the same UAE-China lane as
+  // id 24 with less current data (no live rates, no CEPA detail). Retired
+  // in favour of id 24 rather than left to compete with it in search - Aug
+  // 2026 KOM v2.0 editorial review.
+  '/articles/china-to-dubai-trade-lane-strategy': '/articles/uae-china-trade-lane',
   '/articles/logistics-process': '/insights',
   '/articles/index.html': '/insights',
   // Legacy static-site homepage URL -- flagged as 404 in GSC (7/24/26),
