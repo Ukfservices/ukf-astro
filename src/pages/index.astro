@@ -14,6 +14,7 @@ try {
     'SELECT title, slug, excerpt, category, image_url, read_time, published_date FROM articles ORDER BY published_date DESC LIMIT 3'
   ).all();
   latestArticles = arts.results || [];
+  console.log('Homepage D1 query returned:', latestArticles.length, 'articles');
 
   const testy = await db.prepare(
     'SELECT client_name, company_name, role, sector, quote_short, initials, rating FROM testimonials WHERE active = 1 ORDER BY sort_order ASC LIMIT 3'
