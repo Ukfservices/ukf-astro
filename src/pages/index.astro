@@ -1,5 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import HomepageLeadMagnet from '../components/HomepageLeadMagnet.astro';
+import '../styles/homepage-lead-magnet.css';
 import { env } from 'cloudflare:workers';
 export const prerender = false;
 
@@ -17,7 +19,9 @@ try {
     'SELECT client_name, company_name, role, sector, quote_short, initials, rating FROM testimonials WHERE active = 1 ORDER BY sort_order ASC LIMIT 3'
   ).all();
   testimonials = testy.results || [];
-} catch (e) {}
+} catch (e) {
+  console.error('Homepage D1 query failed:', e);
+}
 
 function getCategoryColor(cat: string) {
   const map: Record<string, string> = {
@@ -294,6 +298,16 @@ function formatDate(d: string) {
       </div>
     </section>
   )}
+
+  <!-- Homepage Lead Magnet -->
+  <section class="lead-magnet-section fade-up">
+    <div class="container">
+      <HomepageLeadMagnet
+        formId="59c38e67-ec5e-4b6b-af60-d768a1e25650"
+        portalId="147301372"
+      />
+    </div>
+  </section>
 
   <!-- TESTIMONIALS -->
   {testimonials.length > 0 && (
