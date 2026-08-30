@@ -23,6 +23,12 @@ const legacyRedirects: Record<string, string> = {
   // in favour of id 24 rather than left to compete with it in search - Aug
   // 2026 KOM v2.0 editorial review.
   '/articles/china-to-dubai-trade-lane-strategy': '/articles/uae-china-trade-lane',
+  // Duplicate-topic consolidation: id 15 was thin, generic, boilerplate
+  // content (leaked markdown asterisks in headings, broken relative links)
+  // fully superseded by id 26's "United Kingdom" destination card, which
+  // has real current rates, HMRC/EORI/VAT specifics. Retired rather than
+  // left live to compete in search - Aug 2026 KOM v2.0 editorial review.
+  '/articles/how-to-ship-from-dubai-to-the-uk-the-complete-2026-guide': '/articles/uae-to-europe-trade-lane',
   '/articles/logistics-process': '/insights',
   '/articles/index.html': '/insights',
   // Legacy static-site homepage URL -- flagged as 404 in GSC (7/24/26),
