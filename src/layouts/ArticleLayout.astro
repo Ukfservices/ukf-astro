@@ -2,15 +2,22 @@
 import BaseLayout from './BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import HubSpotForm from '../components/HubSpotForm.astro';
 
 export interface Props {
   title: string;
   description?: string;
   image?: string;
   canonical?: string;
+  leadMagnetHeadline?: string;
+  leadMagnetSubhead?: string;
 }
 
 const props = Astro.props;
+const {
+  leadMagnetHeadline = "Stay Ahead of UAE Trade Compliance",
+  leadMagnetSubhead = "Don't let paperwork or routing surprises destroy your margin. Download our free <strong>2026 UAE Exporter's Compliance Checklist</strong>.",
+} = props;
 ---
 
 <BaseLayout {...props} type="article">
@@ -19,6 +26,13 @@ const props = Astro.props;
 
   <Nav />
   <main class="article-main">
+   <!-- Lead Magnet CTA Box -->
+<div style="background: #0A1628; color: white; padding: 2rem; border-radius: 8px; margin: 2rem 0; border-left: 4px solid #C9A84C;">
+  <h3 style="font-family: 'Playfair Display', serif; margin-top: 0; color: #C9A84C;">{leadMagnetHeadline}</h3>
+  <p style="margin-bottom: 1rem;" set:html={leadMagnetSubhead}></p>
+  
+  <HubSpotForm />
+</div> 
     <slot />
   </main>
   <Footer />

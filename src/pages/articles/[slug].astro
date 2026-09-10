@@ -73,6 +73,7 @@ function getCategoryColor(cat: string) {
     'Air Freight': '#3b82f6',
     'Sea Freight': '#0ea5e9',
     'Customs': '#8b5cf6',
+    'customs-clearance': '#8b5cf6',
     'Trade Corridors': '#10b981',
     'Market Intelligence': '#f59e0b',
     'Cargo Journeys': '#e63946',
@@ -81,12 +82,47 @@ function getCategoryColor(cat: string) {
   return map[cat] || '#c9a84c';
 }
 
+// Lead magnet copy by category — keeps the CTA relevant to what the reader
+// just read, instead of one hardcoded pitch (originally Red Sea-specific)
+// showing on every article regardless of topic.
+function getLeadMagnetCopy(cat: string) {
+  const map: Record<string, { headline: string; subhead: string }> = {
+    'customs-clearance': {
+      headline: 'Stay Ahead of UAE Customs Requirements',
+      subhead: "Don't let missing documentation or registration gaps delay your shipment. Download our free <strong>2026 UAE Exporter's Compliance Checklist</strong>.",
+    },
+    'supply-chain-strategy': {
+      headline: 'Navigating Red Sea Disruptions?',
+      subhead: "Don't let routing changes and hidden fees destroy your margin. Download our free <strong>2026 UAE Exporter's Compliance Checklist</strong>.",
+    },
+    'Trade Corridors': {
+      headline: 'Navigating Trade Lane Disruptions?',
+      subhead: "Don't let routing changes and hidden fees destroy your margin. Download our free <strong>2026 UAE Exporter's Compliance Checklist</strong>.",
+    },
+    'Indonesia': {
+      headline: 'Navigating Trade Lane Disruptions?',
+      subhead: "Don't let routing changes and hidden fees destroy your margin. Download our free <strong>2026 UAE Exporter's Compliance Checklist</strong>.",
+    },
+  };
+  return map[cat] || {
+    headline: "Stay Ahead of UAE Trade Compliance",
+    subhead: "Don't let paperwork or routing surprises destroy your margin. Download our free <strong>2026 UAE Exporter's Compliance Checklist</strong>.",
+  };
+}
+
 const pageTitle = article ? `${article.title} | UKF Services` : 'Article | UKF Services';
 const pageDesc = article?.excerpt as string || '';
 const pageImage = article?.image_url as string || '/images/ukf-og-default.jpg';
+const leadMagnetCopy = getLeadMagnetCopy(article?.category as string);
 ---
 
-<ArticleLayout title={pageTitle} description={pageDesc} image={pageImage}>
+<ArticleLayout
+  title={pageTitle}
+  description={pageDesc}
+  image={pageImage}
+  leadMagnetHeadline={leadMagnetCopy.headline}
+  leadMagnetSubhead={leadMagnetCopy.subhead}
+>
 
   {error && (
     <div style="padding:120px 24px;text-align:center;color:#e63946;">
