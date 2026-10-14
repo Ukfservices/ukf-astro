@@ -180,19 +180,6 @@ const sectors = [...new Set(testimonials.map((t: any) => t.sector).filter(Boolea
     });
   </script>
 
-  <!-- JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "UKF Services",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": String(testimonials.length),
-      "bestRating": "5",
-      "worstRating": "1"
-    }
-  })} />
 
 </PageLayout>
 
