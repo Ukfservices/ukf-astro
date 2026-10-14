@@ -23,8 +23,6 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
   <head>
   <meta charset="UTF-8" />
   <link rel="preload" as="image" href="/images/hero-cargo.webp" fetchpriority="high" />
-  <link rel="preconnect" href="https://www.googletagmanager.com" />
-  <link rel="preconnect" href="https://www.clarity.ms" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0a1628" />
 
@@ -51,23 +49,7 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- GTM Head -->
-  <script is:inline>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PXLFJJD3');
-  </script>
-
-  <!-- Microsoft Clarity -->
-  <script is:inline>
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "w4xr9gzhq6");
-  </script>
+    <!-- GTM + Clarity: moved to consent-gated script below -->
 
   <!-- HubSpot -->
   <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/147301372.js" is:inline></script>
@@ -200,10 +182,7 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
 </head>
 <body>
 
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PXLFJJD3"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
+  <!-- GTM noscript removed: GTM is consent-gated -->
 
   <slot />
 
@@ -232,21 +211,25 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
     </div>
   </div>
 
-  <!-- GA4 consent-gated -->
+  <!-- GTM + Clarity: consent-gated. GTM's internal GA4 tag (G-C679GLX8V8) fires once GTM loads, so no separate gtag() call is needed. -->
   <script is:inline>
-    function loadGA4() {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C679GLX8V8';
-      document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', 'G-C679GLX8V8');
+    function loadGTM() {
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PXLFJJD3');
     }
 
-    if (localStorage.getItem('ukf_cookie_consent') === 'accepted') { loadGA4(); }
+    function loadClarity() {
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "w4xr9gzhq6");
+    }
+
+    if (localStorage.getItem('ukf_cookie_consent') === 'accepted') { loadGTM(); loadClarity(); }
 
     document.addEventListener('DOMContentLoaded', function() {
       var banner = document.getElementById('cookie-banner');
@@ -256,7 +239,8 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://ukfservic
 
       document.getElementById('cookie-accept').addEventListener('click', function() {
         localStorage.setItem('ukf_cookie_consent', 'accepted');
-        loadGA4();
+        loadGTM();
+        loadClarity();
         banner.classList.remove('visible');
         setTimeout(function() { banner.style.display = 'none'; }, 400);
       });
