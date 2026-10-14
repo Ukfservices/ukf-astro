@@ -14,7 +14,7 @@ if (Test-Path ".env") {
 Write-Host "Cleaning old builds..." -ForegroundColor Cyan
 if (Test-Path "dist") { Remove-Item -Recurse -Force dist }
 if (Test-Path ".astro") { Remove-Item -Recurse -Force .astro }
-if (Test-Path ".wrangler") { Remove-Item -Recurse -Force .wrangler }
+#if (Test-Path ".wrangler") { Remove-Item -Recurse -Force .wrangler }
 
 Write-Host "Building..." -ForegroundColor Cyan
 npm run build
